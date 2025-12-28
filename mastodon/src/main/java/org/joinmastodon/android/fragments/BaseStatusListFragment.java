@@ -52,11 +52,13 @@ import org.joinmastodon.android.ui.utils.MediaAttachmentViewController;
 import org.joinmastodon.android.ui.utils.UiUtils;
 import org.joinmastodon.android.ui.views.MediaGridLayout;
 import org.joinmastodon.android.utils.TypedObjectPool;
+import org.parceler.Parcels;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -69,6 +71,8 @@ import androidx.dynamicanimation.animation.DynamicAnimation;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
 import androidx.recyclerview.widget.RecyclerView;
+import me.grishka.appkit.Nav;
+import me.grishka.appkit.api.APIRequest;
 import me.grishka.appkit.api.Callback;
 import me.grishka.appkit.api.ErrorResponse;
 import me.grishka.appkit.imageloader.ImageLoaderRecyclerAdapter;
@@ -89,6 +93,8 @@ public abstract class BaseStatusListFragment<T extends DisplayItemsParent> exten
 	protected Rect tmpRect=new Rect();
 	protected TypedObjectPool<MediaGridStatusDisplayItem.GridItemType, MediaAttachmentViewController> attachmentViewsPool=new TypedObjectPool<>(this::makeNewMediaAttachmentView);
 	private SpringAnimation listShakeAnimation;
+	protected HashMap<String, Status> knownStatuses=new HashMap<>();
+	protected HashSet<APIRequest<?>> requestsToCancelWhenListClears=new HashSet<>();
 
 	public BaseStatusListFragment(){
 		super(20);
@@ -1010,7 +1016,7 @@ public abstract class BaseStatusListFragment<T extends DisplayItemsParent> exten
 				View bottomSibling=parent.getChildAt(i+1);
 				RecyclerView.ViewHolder holder=parent.getChildViewHolder(child);
 				if(i<parent.getChildCount()-1){
-					View bottomSibling=parent.getChildAt(i+1);
+					//View bottomSibling=parent.getChildAt(i+1);
 					RecyclerView.ViewHolder siblingHolder=parent.getChildViewHolder(bottomSibling);
 					if(needDrawDivider(holder, siblingHolder)){
 						drawDivider(child, bottomSibling, holder, siblingHolder, parent, c, dividerPaint);

@@ -858,6 +858,7 @@
 	<string name="load_missing_posts_above">Load missing posts above</string>
 	<string name="load_missing_posts_below">Load missing posts below</string>
 	<plurals name="sk_users_reacted_with">mreowactions</plurals>
+	<string name="confirm">confirm</string>
 	<string name="sk_button_react">meow!</string>
 	<string name="enter_emoji_hint">meow here</string>
 	<string name="theme_neon">Neonpink</string>
