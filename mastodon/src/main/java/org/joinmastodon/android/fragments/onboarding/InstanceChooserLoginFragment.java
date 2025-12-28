@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import org.joinmastodon.android.BuildConfig;
 import org.joinmastodon.android.R;
 import org.joinmastodon.android.api.requests.catalog.GetCatalogInstances;
 import org.joinmastodon.android.api.session.AccountSessionManager;
@@ -83,6 +84,15 @@ public class InstanceChooserLoginFragment extends InstanceCatalogFragment{
 					filteredData.add(inst);
 				}
 			}
+			if(BuildConfig.DEBUG){
+				CatalogInstance staging=new CatalogInstance();
+				staging.domain=staging.normalizedDomain="staging.mastodon.social";
+				staging.version="4.4";
+				staging.description="Mastodon staging instance";
+				staging.languages=List.of("en");
+				staging.categories=List.of("general");
+				filteredData.add(staging);
+			}
 		}
 		UiUtils.updateList(prevData, filteredData, list, adapter, Objects::equals);
 		for(int i=0;i<list.getChildCount();i++){
@@ -122,6 +132,7 @@ public class InstanceChooserLoginFragment extends InstanceCatalogFragment{
 		Toolbar toolbar=getToolbar();
 		toolbar.setElevation(0);
 		toolbar.setBackground(null);
+		toolbar.setNavigationContentDescription(R.string.back);
 		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.N){
 			toolbar.setContentInsetStartWithNavigation(V.dp(80));
 		}
@@ -187,6 +198,11 @@ public class InstanceChooserLoginFragment extends InstanceCatalogFragment{
 			}
 		});
 		((UsableRecyclerView)list).setDrawSelectorOnTop(true);
+	}
+
+	@Override
+	protected boolean shouldAllowLimitedFederationInstances(){
+		return true;
 	}
 
 	private class InstancesAdapter extends UsableRecyclerView.Adapter<InstanceViewHolder>{

@@ -13,7 +13,7 @@
 	<string name="notifications">通知</string>
 	<string name="user_followed_you">%s 已跟隨您</string>
 	<string name="user_sent_follow_request">%s 已傳送跟隨請求給您</string>
-	<string name="user_favorited">%s 個已加入最愛：</string>
+	<string name="user_favorited">%s 已加入最愛：</string>
 	<string name="notification_boosted">%s 個已轉嘟：</string>
 	<string name="share_toot_title">分享</string>
 	<string name="settings">設定</string>
@@ -82,6 +82,7 @@
 	<string name="do_block">封鎖</string>
 	<string name="button_blocked">已封鎖</string>
 	<string name="action_vote">投票</string>
+	<string name="confirm">確認</string>
 	<string name="delete">刪除</string>
 	<string name="confirm_delete_title">刪除嘟文</string>
 	<string name="confirm_delete">您確定要刪除此嘟文？</string>
@@ -802,4 +803,25 @@
 	<string name="server_x_following_will_be_removed">您將失去 %s 。</string>
 	<string name="load_missing_posts_above">讀取以上錯過的嘟文</string>
 	<string name="load_missing_posts_below">讀取以下錯過的嘟文</string>
+	<string name="signup_password_too_short">密碼長度至少需要八個字元。</string>
+	<string name="private_reply">私訊回嘟</string>
+	<string name="private_mention">私訊</string>
+	<string name="post_header_reply">回嘟</string>
+	<string name="post_header_mention">提及</string>
+	<string name="report_reason_legal">這是非法事項</string>
+	<string name="report_reason_legal_subtitle">您認為它已違反您或伺服器所在國家之法律</string>
+	<string name="date_of_birth">出生日期</string>
+	<!-- %s is `at_least_x_years_old`. Some languages, unlike English, may require the word "years" here. -->
+	<string name="date_of_birth_explanation">我們必須確認您至少年滿 %s 以使用 Mastodon。我們不會儲存此資料。</string>
+	<string name="open_link">開啟</string>
+	<string name="copy">複製</string>
+	<!-- Substituted into `date_of_birth_explanation` -->
+	<plurals name="at_least_x_years_old">
+		<item quantity="other">%d</item>
+	</plurals>
+	<string name="quote_post_unavailable">無法取得該嘟文</string>
+	<string name="quote_post_pending">嘟文正在發送中</string>
+	<string name="quote_post_pending_explanation">您能於 Mastodon 控制是否允許引用您的嘟文。此嘟文正在等待原始作者核准。</string>
+	<!-- %s is a username, i.e. @Gargron -->
+	<string name="nested_quote">已引用 %s 之嘟文</string>
 </resources>

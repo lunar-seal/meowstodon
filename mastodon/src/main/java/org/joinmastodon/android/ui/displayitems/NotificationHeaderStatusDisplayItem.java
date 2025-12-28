@@ -184,6 +184,7 @@ public class NotificationHeaderStatusDisplayItem extends StatusDisplayItem{
 		@Override
 		public void onBind(NotificationHeaderStatusDisplayItem item){
 			text.setText(item.text);
+
 			if(item.notification.notification.type==NotificationType.POLL || item.notification.notification.type==NotificationType.UPDATE){
 				avatarsContainer.setVisibility(View.GONE);
 			}else{

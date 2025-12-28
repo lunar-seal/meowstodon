@@ -58,6 +58,7 @@ public class Status extends BaseModel implements DisplayItemsParent{
 	public String language;
 	public String text;
 	public List<FilterResult> filtered;
+	public Quote quote;
 
 	public boolean favourited;
 	public boolean reblogged;
@@ -100,8 +101,10 @@ public class Status extends BaseModel implements DisplayItemsParent{
 			for(FilterResult fr:filtered)
 				fr.postprocess();
 		}
+		if(quote!=null)
+			quote.postprocess();
 
-		if(!sensitive && (reblog==null || !reblog.sensitive)){
+		if(!sensitive && (reblog==null || !reblog.sensitive) && TextUtils.isEmpty(spoilerText)){
 			revealedSpoilers.add(SpoilerType.CONTENT_WARNING);
 		}
 		if(emojiReactions!=null) reactions=emojiReactions;
@@ -161,12 +164,18 @@ public class Status extends BaseModel implements DisplayItemsParent{
 	}
 
 	public void update(StatusCountersUpdatedEvent ev){
-		favouritesCount=ev.favorites;
-		reblogsCount=ev.reblogs;
-		repliesCount=ev.replies;
-		favourited=ev.favorited;
-		reblogged=ev.reblogged;
-		bookmarked=ev.bookmarked;
+		switch(ev.type){
+			case FAVORITES -> {
+				favouritesCount=ev.favorites;
+				favourited=ev.favorited;
+			}
+			case REBLOGS -> {
+				reblogsCount=ev.reblogs;
+				reblogged=ev.reblogged;
+			}
+			case REPLIES -> repliesCount=ev.replies;
+			case BOOKMARKS -> bookmarked=ev.bookmarked;
+		}
 	}
 
 	public Status getContentStatus(){

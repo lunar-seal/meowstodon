@@ -87,6 +87,7 @@
 	<string name="do_block">ब्लॉक करें</string>
 	<string name="button_blocked">ब्लॉक किया</string>
 	<string name="action_vote">वोट करें</string>
+	<string name="confirm">पुष्टि करें</string>
 	<string name="delete">हटाएं</string>
 	<string name="confirm_delete_title">पोस्ट हटाएं</string>
 	<string name="confirm_delete">इस पोस्ट को वाकई हटाएं?</string>
@@ -351,4 +352,7 @@
 	<!-- appears when you're about to block a server -->
 	<!-- The complete string will look like "You will lose X followers and Y people you follow". See will_lose_x_followers and will_lose_x_following -->
 	<!-- The complete string will look like "You will lose X people you follow". See will_lose_x_following -->
+	<!-- %s is `at_least_x_years_old`. Some languages, unlike English, may require the word "years" here. -->
+	<!-- Substituted into `date_of_birth_explanation` -->
+	<!-- %s is a username, i.e. @Gargron -->
 </resources>

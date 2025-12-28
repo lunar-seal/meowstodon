@@ -45,6 +45,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.twitter.twittertext.TwitterTextEmojiRegex;
@@ -75,6 +76,7 @@ import org.joinmastodon.android.ui.ExtendedPopupMenu;
 import org.joinmastodon.android.ui.M3AlertDialogBuilder;
 import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.PopupKeyboard;
+import org.joinmastodon.android.ui.displayitems.InlineStatusStatusDisplayItem;
 import org.joinmastodon.android.ui.drawables.SpoilerStripesDrawable;
 import org.joinmastodon.android.ui.text.ComposeAutocompleteSpan;
 import org.joinmastodon.android.ui.text.ComposeHashtagOrMentionSpan;
@@ -86,7 +88,11 @@ import org.joinmastodon.android.ui.viewcontrollers.ComposeLanguageAlertViewContr
 import org.joinmastodon.android.ui.viewcontrollers.ComposeMediaViewController;
 import org.joinmastodon.android.ui.viewcontrollers.ComposePollViewController;
 import org.joinmastodon.android.ui.views.ComposeEditText;
+import org.joinmastodon.android.ui.views.CustomScrollView;
+import org.joinmastodon.android.ui.views.NestedRecyclerScrollView;
 import org.joinmastodon.android.ui.views.SizeListenerLinearLayout;
+import org.joinmastodon.android.ui.views.TopBarsScrollAwayLinearLayout;
+import org.joinmastodon.android.utils.ViewImageLoaderHolderTarget;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -123,7 +129,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	@SuppressLint("NewApi") // this class actually exists on 6.0
 	private final BreakIterator breakIterator=BreakIterator.getCharacterInstance();
 
-	public LinearLayout mainLayout;
+	public TopBarsScrollAwayLinearLayout mainLayout;
 	private SizeListenerLinearLayout contentView;
 	private TextView selfName, selfUsername;
 	private ImageView selfAvatar;
@@ -136,7 +142,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	private int charCount, charLimit, trimmedCharCount;
 
 	private ImageButton mediaBtn, pollBtn, emojiBtn, spoilerBtn, languageBtn;
-	private TextView replyText;
+	private FrameLayout replyWrap;
 	private LinearLayout visibilityBtn;
 	private TextView visibilityText1, visibilityText2, visibilityCurrentText;
 	private LinearLayout bottomBar;
@@ -291,7 +297,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		visibilityText2=view.findViewById(R.id.visibility_text2);
 		visibilityCurrentText=visibilityText1;
 		languageBtn=view.findViewById(R.id.btn_language);
-		replyText=view.findViewById(R.id.reply_text);
+		replyWrap=view.findViewById(R.id.reply_wrap);
 
 		mediaBtn.setOnClickListener(v->openFilePicker(false));
 		if(UiUtils.isPhotoPickerAvailable()){
@@ -387,6 +393,10 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 
 		pollViewController.setView(view, savedInstanceState);
 		mediaViewController.setView(view, savedInstanceState);
+
+		NestedRecyclerScrollView outerScroller=view.findViewById(R.id.outer_scroller);
+		CustomScrollView innerScroller=view.findViewById(R.id.inner_scroller);
+		outerScroller.setScrollableChildSupplier(()->innerScroller);
 
 		creatingView=false;
 
@@ -518,7 +528,17 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		});
 		spoilerEdit.addTextChangedListener(new SimpleTextWatcher(e->updateCharCounter()));
 		if(replyTo!=null){
-			replyText.setText(getString(R.string.in_reply_to, replyTo.account.displayName));
+			InlineStatusStatusDisplayItem item=new InlineStatusStatusDisplayItem("reply", this, replyTo, accountID, R.drawable.ic_reply_wght700_20px, getString(R.string.in_reply_to, replyTo.account.displayName));
+			item.fullWidth=true;
+			InlineStatusStatusDisplayItem.Holder holder=new InlineStatusStatusDisplayItem.Holder(getActivity(), replyWrap);
+			replyWrap.addView(holder.itemView);
+			holder.bind(item);
+			int imgCount=item.getImageCount();
+			for(int i=0;i<imgCount;i++){
+				ViewImageLoader.load(new ViewImageLoaderHolderTarget(holder, i), null, item.getImageRequest(i), false, true);
+			}
+//			mainLayout.setTopBarsCount(1);
+
 			ArrayList<String> mentions=new ArrayList<>();
 			String ownID=AccountSessionManager.getInstance().getAccount(accountID).self.id;
 			if(!replyTo.account.id.equals(ownID))
@@ -544,7 +564,8 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 				}
 			}
 		}else{
-			replyText.setVisibility(View.GONE);
+			replyWrap.setVisibility(View.GONE);
+//			mainLayout.setTopBarsCount(0);
 		}
 		if(savedInstanceState==null){
 			if(editingStatus!=null){
@@ -780,7 +801,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 					E.post(new StatusCreatedEvent(result, accountID));
 					if(replyTo!=null){
 						replyTo.repliesCount++;
-						E.post(new StatusCountersUpdatedEvent(replyTo));
+						E.post(new StatusCountersUpdatedEvent(replyTo, StatusCountersUpdatedEvent.CounterType.REPLIES));
 					}
 				}else{
 					E.post(new StatusUpdatedEvent(result));

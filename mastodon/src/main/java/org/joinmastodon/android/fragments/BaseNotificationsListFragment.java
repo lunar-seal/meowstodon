@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import org.joinmastodon.android.R;
+import org.joinmastodon.android.api.session.AccountSessionManager;
 import org.joinmastodon.android.model.Account;
 import org.joinmastodon.android.model.NotificationType;
 import org.joinmastodon.android.model.Status;
+import org.joinmastodon.android.model.StatusPrivacy;
 import org.joinmastodon.android.model.viewmodel.NotificationViewModel;
+import org.joinmastodon.android.ui.displayitems.FollowRequestActionsDisplayItem;
 import org.joinmastodon.android.ui.displayitems.InlineStatusStatusDisplayItem;
 import org.joinmastodon.android.ui.displayitems.NotificationHeaderStatusDisplayItem;
 import org.joinmastodon.android.ui.displayitems.NotificationWithButtonStatusDisplayItem;
@@ -29,7 +32,17 @@ public abstract class BaseNotificationsListFragment extends BaseStatusListFragme
 	protected List<StatusDisplayItem> buildDisplayItems(NotificationViewModel n){
 		StatusDisplayItem titleItem;
 		if(n.notification.type==NotificationType.MENTION){
-			titleItem=null;
+			if(n.status!=null){
+				boolean replyToSelf=AccountSessionManager.get(accountID).self.id.equals(n.status.inReplyToAccountId);
+				int icon=replyToSelf ? R.drawable.ic_reply_wght700_20px : R.drawable.ic_alternate_email_wght700fill1_20px;
+				if(n.status.visibility==StatusPrivacy.DIRECT){
+					titleItem=new ReblogOrReplyLineStatusDisplayItem(n.getID(), this, getString(replyToSelf ? R.string.private_reply : R.string.private_mention), null, icon);
+				}else{
+					titleItem=new ReblogOrReplyLineStatusDisplayItem(n.getID(), this, getString(replyToSelf ? R.string.post_header_reply : R.string.post_header_mention), null, icon);
+				}
+			}else{
+				titleItem=null;
+			}
 		}else if(n.notification.type==NotificationType.STATUS){
 			if(n.status!=null)
 				titleItem=new ReblogOrReplyLineStatusDisplayItem(n.getID(), this, getString(R.string.user_just_posted), n.status.account, R.drawable.ic_notifications_wght700fill1_20px);
@@ -42,17 +55,19 @@ public abstract class BaseNotificationsListFragment extends BaseStatusListFragme
 				titleItem=new NotificationHeaderStatusDisplayItem(n.getID(), this, n, accountID);
 		}
 		if(n.status!=null){
-			if(titleItem!=null && n.notification.type!=NotificationType.STATUS){
-				InlineStatusStatusDisplayItem inlineItem=new InlineStatusStatusDisplayItem(n.getID(), this, n.status);
+			if(titleItem!=null && n.notification.type!=NotificationType.STATUS && n.notification.type!=NotificationType.MENTION){
+				InlineStatusStatusDisplayItem inlineItem=new InlineStatusStatusDisplayItem(n.getID(), this, n.status, accountID);
 				inlineItem.removeTopPadding=true;
 				return List.of(titleItem, inlineItem);
 			}else{
-				ArrayList<StatusDisplayItem> items=StatusDisplayItem.buildItems(this, n.status, accountID, n, knownAccounts, 0);
+				ArrayList<StatusDisplayItem> items=StatusDisplayItem.buildItems(this, n.status, accountID, n, knownAccounts, titleItem!=null ? StatusDisplayItem.FLAG_NO_IN_REPLY_TO : 0);
 				if(titleItem!=null)
 					items.add(0, titleItem);
 				return items;
 			}
 		}else if(titleItem!=null){
+			if(n.notification.type==NotificationType.FOLLOW_REQUEST)
+				return List.of(titleItem, new FollowRequestActionsDisplayItem(n.getID(), this, n));
 			return List.of(titleItem);
 		}else{
 			return List.of();
@@ -74,18 +89,29 @@ public abstract class BaseNotificationsListFragment extends BaseStatusListFragme
 		NotificationViewModel n=getNotificationByID(id);
 		if(n.status!=null){
 			Status status=n.status;
-			Bundle args=new Bundle();
-			args.putString("account", accountID);
-			args.putParcelable("status", Parcels.wrap(status.clone()));
-			if(status.inReplyToAccountId!=null && knownAccounts.containsKey(status.inReplyToAccountId))
-				args.putParcelable("inReplyToAccount", Parcels.wrap(knownAccounts.get(status.inReplyToAccountId)));
-			Nav.go(getActivity(), ThreadFragment.class, args);
+			navigateToStatus(status);
 		}else{
 			Bundle args=new Bundle();
 			args.putString("account", accountID);
 			args.putParcelable("profileAccount", Parcels.wrap(n.accounts.get(0)));
 			Nav.go(getActivity(), ProfileFragment.class, args);
 		}
+	}
+
+	@Override
+	public void onItemClick(String id, boolean quote){
+		NotificationViewModel n=getNotificationByID(id);
+		if(n.status!=null){
+			Status status=n.status;
+			navigateToStatus(quote ? status.quote.quotedStatus : status);
+		}else{
+			super.onItemClick(id, quote);
+		}
+	}
+
+	@Override
+	protected Status asStatus(NotificationViewModel s){
+		return s.status;
 	}
 
 	protected NotificationViewModel getNotificationByID(String id){
@@ -96,7 +122,7 @@ public abstract class BaseNotificationsListFragment extends BaseStatusListFragme
 		return null;
 	}
 
-	protected void removeNotification(NotificationViewModel n){
+	public void removeNotification(NotificationViewModel n){
 		data.remove(n);
 		preloadedData.remove(n);
 		int index=-1;

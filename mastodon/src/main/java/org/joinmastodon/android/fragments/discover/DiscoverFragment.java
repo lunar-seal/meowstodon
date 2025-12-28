@@ -28,6 +28,7 @@ import org.joinmastodon.android.ui.SimpleViewHolder;
 import org.joinmastodon.android.ui.tabs.TabLayout;
 import org.joinmastodon.android.ui.tabs.TabLayoutMediator;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.views.NestedRecyclerScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -230,6 +231,13 @@ public class DiscoverFragment extends AppKitFragment implements ScrollableToTop{
 			@Override
 			public void onTabReselected(TabLayout.Tab tab){}
 		});
+
+		NestedRecyclerScrollView scroller=view.findViewById(R.id.scroller);
+		scroller.setScrollableChildSupplier(()->{
+			View fragmentView=getFragmentForPage(tabLayout.getSelectedTabPosition()).getView();
+			return fragmentView==null ? null : fragmentView.findViewById(R.id.list);
+		});
+		scroller.setTakePriorityOverChildViews(true);
 
 		return view;
 	}

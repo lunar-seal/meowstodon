@@ -9,7 +9,7 @@
 	<string name="preparing_auth">Authentisierung wird vorbereitet …</string>
 	<string name="finishing_auth">Authentisierung wird abgeschlossen …</string>
 	<string name="user_boosted">%s teilte</string>
-	<string name="in_reply_to">als Antwort auf %s</string>
+	<string name="in_reply_to">Antwort an %s</string>
 	<string name="notifications">Benachrichtigungen</string>
 	<string name="user_followed_you">%s folgt dir jetzt</string>
 	<string name="user_sent_follow_request">%s möchte dir folgen</string>
@@ -93,6 +93,7 @@
 	<string name="do_block">Sperren</string>
 	<string name="button_blocked">Blockiert</string>
 	<string name="action_vote">Abstimmen</string>
+	<string name="confirm">Bestätigen</string>
 	<string name="delete">Löschen</string>
 	<string name="confirm_delete_title">Beitrag löschen</string>
 	<string name="confirm_delete">Möchtest du diesen Beitrag wirklich löschen?</string>
@@ -193,7 +194,7 @@
 	<string name="settings_app_version">Mastodon für Android v%1$s (%2$d)</string>
 	<string name="media_cache_cleared">Medien-Cache geleert</string>
 	<string name="confirm_log_out">Von %s abmelden?</string>
-	<string name="sensitive_content_explain">Autor*in hat den Inhalt mit einer Inhaltswarnung versehen.</string>
+	<string name="sensitive_content_explain">Inhaltswarnung</string>
 	<string name="avatar_description">Profil von %s aufrufen</string>
 	<string name="more_options">Weitere Einstellungen</string>
 	<string name="new_post">Neuer Beitrag</string>
@@ -292,7 +293,7 @@
 	<string name="file_size_gb">%.2f GB</string>
 	<string name="upload_processing">Wird verarbeitet …</string>
 	<!-- %s is file size -->
-	<string name="download_update">(%s) herunterladen</string>
+	<string name="download_update">Herunterladen (%s)</string>
 	<string name="install_update">Installieren</string>
 	<string name="privacy_policy_title">Deine Privatsphäre</string>
 	<string name="privacy_policy_subtitle">Auch wenn die Mastodon-App keine Daten sammelt, kann der Server, über den du dich registrierst, eine andere Richtlinie haben.\n\nWenn du mit der Richtlinie für %s nicht einverstanden bist, kannst du zurückkehren und einen anderen Server wählen.</string>
@@ -333,11 +334,11 @@
 	<string name="sending_follows">Nutzer*innen wird gefolgt …</string>
 	<!-- %1$s is server domain, %2$s is email domain. You can reorder these placeholders to fit your language better. -->
 	<string name="signup_email_domain_blocked">%1$s lässt keine Registrierungen von %2$s zu. Probiere einen anderen E-Mail-Anbieter oder &lt;a&gt;wähle einen anderen Server&lt;/a&gt;.</string>
-	<string name="spoiler_show">Trotzdem anzeigen</string>
-	<string name="spoiler_hide">Wieder ausblenden</string>
+	<string name="spoiler_show">Beitrag anzeigen</string>
+	<string name="spoiler_hide">Beitrag ausblenden</string>
 	<string name="poll_multiple_choice">Wähle ein/e oder mehrere aus</string>
 	<string name="save_changes">Änderungen speichern</string>
-	<string name="profile_featured">Empfohlen</string>
+	<string name="profile_featured">Vorgestellt</string>
 	<string name="profile_timeline">Timeline</string>
 	<string name="view_all">Alle anzeigen</string>
 	<string name="profile_endorsed_accounts">Konten</string>
@@ -379,7 +380,7 @@
 	<string name="alt_text">Alt-Text</string>
 	<string name="help">Hilfe</string>
 	<string name="what_is_alt_text">Was ist Alt-Text?</string>
-	<string name="alt_text_help">Alt-Text bietet Bildbeschreibungen für Personen mit einer Sehbehinderung, einer schlechten Internetverbindung und für alle, die zusätzlichen Kontext möchten.\n\nDu kannst die Zugänglichkeit und die Verständlichkeit für alle verbessern, indem du eine klare, genaue und objektive Bildbeschreibung hinzufügst.\n\n<ul><li>Erfasse wichtige Elemente</li>\n<li>Fasse Text in Bildern zusammen</li>\n<li>Verwende einen korrekten Satzbau</li>\n<li>Vermeide unwichtige Informationen</li>\n<li>Konzentriere dich bei komplexen Darstellungen (z. B. Diagramme oder Karten) auf Trends und wichtige Erkenntnisse</li></ul></string>
+	<string name="alt_text_help">Alt-Text bietet Bildbeschreibungen für Personen mit einer Sehschwäche, einer schlechten Internetverbindung und für alle, die zusätzlichen Kontext möchten.\n\nDu kannst die Zugänglichkeit und die Verständlichkeit für alle verbessern, indem du eine klare, genaue und objektive Bildbeschreibung hinzufügst.\n\n<ul><li>Erfasse wichtige Elemente</li>\n<li>Fasse Text in Bildern zusammen</li>\n<li>Verwende einen korrekten Satzbau</li>\n<li>Vermeide unwichtige Informationen</li>\n<li>Konzentriere dich bei komplexen Darstellungen (z. B. Diagramme oder Karten) auf Trends und wichtige Erkenntnisse</li></ul></string>
 	<string name="edit_post">Beitrag bearbeiten</string>
 	<string name="no_verified_link">Kein bestätigter Link</string>
 	<string name="compose_autocomplete_emoji_empty">Emoji durchsuchen</string>
@@ -847,4 +848,26 @@
 	<string name="server_x_following_will_be_removed">Du wirst %s entfolgen.</string>
 	<string name="load_missing_posts_above">Fehlende Beiträge hierüber laden</string>
 	<string name="load_missing_posts_below">Fehlende Beiträge hierunter laden</string>
+	<string name="signup_password_too_short">Das Passwort muss mindestens 8 Zeichen lang sein.</string>
+	<string name="private_reply">Private Antwort</string>
+	<string name="private_mention">Private Erwähnung</string>
+	<string name="post_header_reply">Antwort</string>
+	<string name="post_header_mention">Erwähnung</string>
+	<string name="report_reason_legal">Das ist rechtswidrig</string>
+	<string name="report_reason_legal_subtitle">Du glaubst, dass es gegen die Gesetze deines Landes oder des Landes des Servers verstößt</string>
+	<string name="date_of_birth">Geburtsdatum</string>
+	<!-- %s is `at_least_x_years_old`. Some languages, unlike English, may require the word "years" here. -->
+	<string name="date_of_birth_explanation">Wir müssen sicherstellen, dass du mindestens %s alt bist, um Mastodon verwenden zu können. Das Alter wird nicht gespeichert.</string>
+	<string name="open_link">Öffnen</string>
+	<string name="copy">Kopieren</string>
+	<!-- Substituted into `date_of_birth_explanation` -->
+	<plurals name="at_least_x_years_old">
+		<item quantity="one">%d Jahr</item>
+		<item quantity="other">%d Jahre</item>
+	</plurals>
+	<string name="quote_post_unavailable">Beitrag nicht verfügbar</string>
+	<string name="quote_post_pending">Beitragsveröffentlichung ausstehend</string>
+	<string name="quote_post_pending_explanation">Auf Mastodon kannst du bestimmen, ob du zitiert werden darfst. Wir warten auf die Genehmigung des ursprünglichen Profils – solange steht deine Beitragsveröffentlichung noch aus.</string>
+	<!-- %s is a username, i.e. @Gargron -->
+	<string name="nested_quote">Einen Beitrag von %s zitiert</string>
 </resources>

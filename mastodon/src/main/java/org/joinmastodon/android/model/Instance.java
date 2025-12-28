@@ -8,6 +8,8 @@ import org.parceler.Parcel;
 import java.net.IDN;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public abstract class Instance extends BaseModel{
 	/**
@@ -67,7 +69,7 @@ public abstract class Instance extends BaseModel{
 	public abstract Account getContactAccount();
 	public abstract String getContactEmail();
 	public abstract boolean areRegistrationsOpen();
-	public abstract boolean isApprovalRequired();
+	public abstract boolean isSignupReasonRequired();
 	public abstract boolean areInvitesEnabled();
 	public abstract String getThumbnailURL();
 	public abstract int getVersion();
@@ -81,8 +83,38 @@ public abstract class Instance extends BaseModel{
 	public static class Rule{
 		public String id;
 		public String text;
+		public String hint;
+		public Map<String, Translation> translations;
 
 		public transient CharSequence parsedText;
+		public transient CharSequence parsedHint;
+		public transient boolean hintExpanded;
+
+		private Translation findTranslationForCurrentLocale(){
+			if(translations==null || translations.isEmpty())
+				return null;
+			Locale locale=Locale.getDefault();
+			Translation t=translations.get(locale.toLanguageTag());
+			if(t!=null)
+				return t;
+			return translations.get(locale.getLanguage());
+		}
+
+		public String getTranslatedText(){
+			Translation translation=findTranslationForCurrentLocale();
+			return translation==null || translation.text==null ? text : translation.text;
+		}
+
+		public String getTranslatedHint(){
+			Translation translation=findTranslationForCurrentLocale();
+			return translation==null || translation.hint==null ? hint : translation.hint;
+		}
+
+		@Parcel
+		public static class Translation{
+			public String text;
+			public String hint;
+		}
 	}
 
 	@Parcel
@@ -90,6 +122,7 @@ public abstract class Instance extends BaseModel{
 		public StatusesConfiguration statuses;
 		public MediaAttachmentsConfiguration mediaAttachments;
 		public PollsConfiguration polls;
+		public URLsConfiguration urls;
 	}
 
 	@Parcel
@@ -115,5 +148,14 @@ public abstract class Instance extends BaseModel{
 		public int maxCharactersPerOption;
 		public int minExpiration;
 		public int maxExpiration;
+	}
+
+	@Parcel
+	public static class URLsConfiguration{
+		public String streaming;
+		public String status;
+		public String about;
+		public String privacyPolicy;
+		public String termsOfService;
 	}
 }

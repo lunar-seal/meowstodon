@@ -30,7 +30,7 @@
 		<item quantity="other">volgend</item>
 	</plurals>
 	<string name="posts">Berichten</string>
-	<string name="posts_and_replies">Berichten en reacties</string>
+	<string name="posts_and_replies">Reacties</string>
 	<string name="media">Media</string>
 	<string name="profile_about">Over</string>
 	<string name="button_follow">Volgen</string>
@@ -93,6 +93,7 @@
 	<string name="do_block">Blokkeren</string>
 	<string name="button_blocked">Geblokkeerd</string>
 	<string name="action_vote">Stemmen</string>
+	<string name="confirm">Bevestigen</string>
 	<string name="delete">Verwijderen</string>
 	<string name="confirm_delete_title">Bericht verwijderen</string>
 	<string name="confirm_delete">Weet je zeker dat je dit bericht wilt verwijderen?</string>
@@ -412,9 +413,9 @@
 	<string name="about_app">Over %s</string>
 	<string name="default_post_language">Standaardtaal voor berichten</string>
 	<string name="settings_alt_text_reminders">Alt-tekst-herinneringen toevoegen</string>
-	<string name="settings_confirm_unfollow">Voordat je iemand ontvolgd om bevestiging vragen</string>
+	<string name="settings_confirm_unfollow">Voordat je iemand ontvolgt om bevestiging vragen</string>
 	<string name="settings_confirm_boost">Voordat je een bericht boost om bevestiging vragen</string>
-	<string name="settings_confirm_delete_post">Voordat je een bericht verwijderd om bevestiging vragen</string>
+	<string name="settings_confirm_delete_post">Voordat je een bericht verwijdert om bevestiging vragen</string>
 	<string name="pause_all_notifications">Alles pauzeren</string>
 	<string name="pause_notifications_off">Uit</string>
 	<string name="notifications_policy_anyone">Iedereen</string>
@@ -600,7 +601,7 @@
 	<string name="manage_accounts">Accounts toevoegen of wisselen</string>
 	<plurals name="x_posts_recently">
 		<item quantity="one">Onlangs %,d bericht</item>
-		<item quantity="other">Recentelijk %,d berichten</item>
+		<item quantity="other">Onlangs %,d berichten</item>
 	</plurals>
 	<string name="create_list">Lijst aanmaken</string>
 	<string name="step_x_of_y">Stap %1$d van %2$d</string>
@@ -611,7 +612,7 @@
 	<string name="reply_to_user">Reageer op %s</string>
 	<string name="posted_at">Geplaatst op %s</string>
 	<string name="non_mutual_sheet_title">Hallo, een nieuwe connectie!</string>
-	<string name="non_mutual_sheet_text">Het lijkt erop dat je gaat reageren op iemand die nog geen wederzijdse connectie is. Laten we een goede eerste indruk maken.</string>
+	<string name="non_mutual_sheet_text">Het lijkt erop dat je op iemand gaat reageren die jou nog niet volgt. Laten we een goede eerste indruk maken.</string>
 	<string name="got_it">Begrepen</string>
 	<string name="dont_remind_again">Herinner me niet opnieuw</string>
 	<!-- %s is a time interval ("5 months") -->
@@ -738,7 +739,7 @@
 	<string name="could_not_reach_server">Kon de server niet bereiken. Controleer je verbinding en probeer het opnieuw.</string>
 	<string name="connection_timed_out">De aanvraag is verlopen. Controleer je verbinding en probeer het opnieuw.</string>
 	<string name="server_error">Er is iets misgegaan met de communicatie met je server. Waarschijnlijk is het niet jouw fout. Opnieuw proberen?</string>
-	<string name="not_found">Deze is wellicht verwijderd of heeft misschien nooit bestaan.</string>
+	<string name="not_found">Deze is misschien verwijderd of heeft misschien nooit bestaan.</string>
 	<string name="no_servers_found">Geen servers voor “%s” gevonden</string>
 	<string name="signup_username_taken">Deze gebruikersnaam is al in gebruik. Probeer een andere gebruikersnaam of &lt;a&gt;kies een andere server&lt;/a&gt;.</string>
 	<string name="signup_email_invalid">Dat lijkt geen geldig e-mailadres te zijn.</string>
@@ -820,7 +821,49 @@
 	<string name="profile_saved_posts">Opgeslagen</string>
 	<string name="profile_saved_posts_explanation">Jouw opgeslagen berichten zijn alleen zichtbaar voor jou.</string>
 	<string name="search_people">Mensen</string>
+	<plurals name="familiar_followers_many">
+		<item quantity="one">Gevolgd door %1$s, %2$s en %3$,d ander persoon</item>
+		<item quantity="other">Gevolgd door %1$s, %2$s en %3$,d anderen</item>
+	</plurals>
+	<plurals name="x_followers_you_know">
+		<item quantity="one">%,d volger die jij ook volgt</item>
+		<item quantity="other">%,d volgers die jij ook volgt</item>
+	</plurals>
 	<!-- appears when you're about to block a server -->
+	<plurals name="server_x_followers_will_be_removed">
+		<item quantity="one">%,d volger van deze server wordt verwijderd.</item>
+		<item quantity="other">%,d volgers van deze server worden verwijderd.</item>
+	</plurals>
 	<!-- The complete string will look like "You will lose X followers and Y people you follow". See will_lose_x_followers and will_lose_x_following -->
+	<string name="server_x_followers_and_following_will_be_removed">Je verliest %1$s en %2$s.</string>
+	<plurals name="will_lose_x_followers">
+		<item quantity="one">%,d volger</item>
+		<item quantity="other">%,d volgers</item>
+	</plurals>
+	<plurals name="will_lose_x_following">
+		<item quantity="one">%,d account die jij volgt</item>
+		<item quantity="other">%,d accounts die jij volgt</item>
+	</plurals>
 	<!-- The complete string will look like "You will lose X people you follow". See will_lose_x_following -->
+	<string name="server_x_following_will_be_removed">Je verliest %s.</string>
+	<string name="load_missing_posts_above">Missende berichten hierboven laden</string>
+	<string name="load_missing_posts_below">Missende berichten hieronder laden</string>
+	<string name="signup_password_too_short">Het wachtwoord dient tenminste 8 tekens te bevatten.</string>
+	<string name="private_reply">Privéreactie</string>
+	<string name="private_mention">Privébericht</string>
+	<string name="post_header_reply">Reactie</string>
+	<string name="post_header_mention">Vermelding</string>
+	<string name="report_reason_legal">Het is wettelijk niet toegestaan</string>
+	<string name="report_reason_legal_subtitle">Je meent dat het de wet van jouw land of dat van de serverlocatie schendt</string>
+	<string name="date_of_birth">Geboortedatum</string>
+	<!-- %s is `at_least_x_years_old`. Some languages, unlike English, may require the word "years" here. -->
+	<string name="date_of_birth_explanation">We moeten ervoor zorgen dat je tenminste %s bent om Mastodon te gebruiken. Dit wordt na het registreren niet opgeslagen.</string>
+	<string name="open_link">Openen</string>
+	<string name="copy">Kopiëren</string>
+	<!-- Substituted into `date_of_birth_explanation` -->
+	<plurals name="at_least_x_years_old">
+		<item quantity="one">%d</item>
+		<item quantity="other">%d</item>
+	</plurals>
+	<!-- %s is a username, i.e. @Gargron -->
 </resources>

@@ -3,6 +3,7 @@ package org.joinmastodon.android.ui.text;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -95,7 +96,9 @@ public class HtmlParser{
 
 		source=source.replaceAll("[\u2028\u2029]", "<br>");
 		final SpannableStringBuilder ssb=new SpannableStringBuilder();
-		Jsoup.parseBodyFragment(source).body().traverse(new NodeVisitor(){
+		Element body=Jsoup.parseBodyFragment(source).body();
+		body.select(".quote-inline").remove();
+		body.traverse(new NodeVisitor(){
 			private final ArrayList<SpanInfo> openSpans=new ArrayList<>();
 			private boolean lastElementWasBlock=false;
 
@@ -180,7 +183,7 @@ public class HtmlParser{
 						case "code" -> {
 							if(!isInsidePre()){
 								openSpans.add(new SpanInfo(new MonospaceSpan(context), ssb.length(), el));
-								ssb.append(" ", new SpacerSpan(V.dp(4), 0), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+								ssb.append(" ", new SpacerSpan(V.dp(4), 0), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 							}
 						}
 						case "pre" -> openSpans.add(new SpanInfo(new CodeBlockSpan(context), ssb.length(), el));
@@ -229,7 +232,7 @@ public class HtmlParser{
 						if(si.element==el){
 							if(si.span!=null){
 								if(si.span instanceof MonospaceSpan){
-									ssb.append(" ", new SpacerSpan(V.dp(4), 0), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+									ssb.append(" ", new SpacerSpan(V.dp(4), 0), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 								}
 								ssb.setSpan(si.span, si.start, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 							}
@@ -348,8 +351,8 @@ public class HtmlParser{
 		int fgColor=UiUtils.getThemeColor(context, R.attr.colorM3Error);
 		int bgColor=UiUtils.getThemeColor(context, R.attr.colorM3ErrorContainer);
 		for(FilterResult filter:filters){
-			if(!filter.filter.isActive())
-				continue;;
+			if(!filter.filter.isActive() || filter.keywordMatches==null)
+				continue;
 			for(String word:filter.keywordMatches){
 				Matcher matcher=Pattern.compile("\\b"+Pattern.quote(word)+"\\b", Pattern.CASE_INSENSITIVE).matcher(text);
 				while(matcher.find()){

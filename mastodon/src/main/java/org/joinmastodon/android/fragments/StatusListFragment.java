@@ -15,7 +15,6 @@ import org.joinmastodon.android.model.Status;
 import org.joinmastodon.android.ui.displayitems.ExtendedFooterStatusDisplayItem;
 import org.joinmastodon.android.ui.displayitems.FooterStatusDisplayItem;
 import org.joinmastodon.android.ui.displayitems.StatusDisplayItem;
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import androidx.recyclerview.widget.RecyclerView;
-import me.grishka.appkit.Nav;
 
 public abstract class StatusListFragment extends BaseStatusListFragment<Status>{
 	protected EventListener eventListener=new EventListener();
@@ -55,12 +53,20 @@ public abstract class StatusListFragment extends BaseStatusListFragment<Status>{
 		Status status=getContentStatusByID(id);
 		if(status==null)
 			return;
-		Bundle args=new Bundle();
-		args.putString("account", accountID);
-		args.putParcelable("status", Parcels.wrap(status.clone()));
-		if(status.inReplyToAccountId!=null && knownAccounts.containsKey(status.inReplyToAccountId))
-			args.putParcelable("inReplyToAccount", Parcels.wrap(knownAccounts.get(status.inReplyToAccountId)));
-		Nav.go(getActivity(), ThreadFragment.class, args);
+		navigateToStatus(status);
+	}
+
+	@Override
+	public void onItemClick(String id, boolean quote){
+		Status status=getContentStatusByID(id);
+		if(status==null)
+			return;
+		navigateToStatus(quote ? status.quote.quotedStatus : status);
+	}
+
+	@Override
+	protected Status asStatus(Status s){
+		return s;
 	}
 
 	protected void onStatusCreated(Status status){}
