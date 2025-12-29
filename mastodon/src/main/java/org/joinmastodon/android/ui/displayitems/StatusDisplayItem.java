@@ -92,7 +92,7 @@ public abstract class StatusDisplayItem{
 			case SECTION_HEADER -> new SectionHeaderStatusDisplayItem.Holder(activity, parent);
 			case NOTIFICATION_HEADER -> new NotificationHeaderStatusDisplayItem.Holder(activity, parent);
 			case INLINE_STATUS -> new InlineStatusStatusDisplayItem.Holder(activity, parent);
-			case EMOJI_REACTIONS -> new EmojiReactionsStatusDisplayItem.Holder(activity, parent);
+			case EMOJI_REACTIONS -> new EmojiReactionsStatusDisplayItem.Holder(activity, parent, ((BaseStatusListFragment<?>)parentFragment).getSession());
 			case NOTIFICATION_WITH_BUTTON -> new NotificationWithButtonStatusDisplayItem.Holder(activity, parent);
 			case FOLLOW_REQUEST_ACTIONS -> new FollowRequestActionsDisplayItem.Holder(activity, parent);
 			case QUOTE_ERROR -> new QuoteErrorStatusDisplayItem.Holder(activity, parent);
@@ -224,7 +224,7 @@ public abstract class StatusDisplayItem{
 			cwParentItems.addAll(contentItems);
 		}
 		boolean showAddButton=true;
-		EmojiReactionsStatusDisplayItem reactor = new EmojiReactionsStatusDisplayItem(parentID, fragment, statusForContent, accountID, !showAddButton, false);
+		EmojiReactionsStatusDisplayItem reactor = new EmojiReactionsStatusDisplayItem(parentID, callbacks, context, statusForContent, accountID, !showAddButton, false);
 		items.add(reactor);
 		if((flags & FLAG_NO_FOOTER)==0){
 			FooterStatusDisplayItem footer=new FooterStatusDisplayItem(parentID, callbacks, context, statusForContent, accountID);

@@ -31,7 +31,6 @@ import org.joinmastodon.android.api.requests.statuses.PleromaAddStatusReaction;
 import org.joinmastodon.android.api.requests.statuses.PleromaDeleteStatusReaction;
 import org.joinmastodon.android.api.session.AccountSessionManager;
 import org.joinmastodon.android.events.EmojiReactionsUpdatedEvent;
-import org.joinmastodon.android.fragments.BaseStatusListFragment;
 import org.joinmastodon.android.fragments.account_list.StatusEmojiReactionsListFragment;
 import org.joinmastodon.android.model.Account;
 import org.joinmastodon.android.model.Emoji;
@@ -62,13 +61,13 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 	private static final float ALPHA_DISABLED=0.55f;
 	private final Status status;
 
-	public EmojiReactionsStatusDisplayItem(String parentID, BaseStatusListFragment<?> parentFragment, Status status, String accountID, boolean hideEmpty, boolean forAnnouncement) {
-		super(parentID, parentFragment);
+	public EmojiReactionsStatusDisplayItem(String parentID, Callbacks callbacks, Context context, Status status, String accountID, boolean hideEmpty, boolean forAnnouncement) {
+		super(parentID, callbacks, context);
 		this.status=status;
 		this.hideEmpty=hideEmpty;
 		this.forAnnouncement=forAnnouncement;
 		this.accountID=accountID;
-		placeholder=parentFragment.getContext().getDrawable(R.drawable.image_placeholder).mutate();
+		placeholder=context.getDrawable(R.drawable.image_placeholder).mutate();
 		placeholder.setBounds(0, 0, V.sp(24), V.sp(24));
 		playGifs=GlobalUserPreferences.playGifs;
     }
@@ -119,7 +118,7 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 				@Override
 				public void onError(ErrorResponse error){
 					setActionProgressVisible(vh, false);
-					error.showToast(parentFragment.getContext());
+					error.showToast(context);
 					if(err!=null) err.run();
 				}
 			});
@@ -129,6 +128,8 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 	public static class Holder extends StatusDisplayItem.Holder<EmojiReactionsStatusDisplayItem> implements ImageLoaderViewHolder, CustomEmojiPopupKeyboard.Listener {
 		private final UsableRecyclerView list;
 		private final LinearLayout root, line;
+		private final String session;
+		private final Activity activity;
 		private CustomEmojiPopupKeyboard emojiKeyboard;
 		private final View space;
 		private final ImageButton addButton;
@@ -136,8 +137,10 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 		private final EmojiReactionsAdapter adapter;
 		private final ListImageLoaderWrapper imgLoader;
 
-		public Holder(Activity activity, ViewGroup parent) {
+		public Holder(Activity activity, ViewGroup parent, String session) {
 			super(activity, R.layout.display_item_emoji_reactions, parent);
+			this.session=session;
+			this.activity=activity;
 			root=(LinearLayout) itemView;
 			line=findViewById(R.id.line);
 			list=findViewById(R.id.list);
@@ -161,10 +164,9 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 				//addButton.setVisibility(View.GONE);
 			}
 			emojiKeyboard=new CustomEmojiReactionPopupKeyboard(
-					this.item.parentFragment.getActivity(),
-					this.item.parentFragment.getAccountID(),
-					AccountSessionManager.getInstance().getCustomEmojis(item.parentFragment.getSession()),
-					item.parentFragment.getSession());
+					this.activity,
+					this.item.accountID,
+					AccountSessionManager.getInstance().getCustomEmojis(this.session), this.session);
 			emojiKeyboard.setListener(this);
 			space.setVisibility(View.GONE);
 			root.addView(emojiKeyboard.getView());
@@ -259,9 +261,10 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 			((Activity) v.getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
 			v.getLocationOnScreen(locationOnScreen);
 			double fromScreenTop = (double) locationOnScreen[1] / displayMetrics.heightPixels;
-			if (fromScreenTop > 0.6){
-				item.parentFragment.scrollBy(0, (int) (displayMetrics.heightPixels * 0.4));
-			}
+			//TODO fix this
+			//if (fromScreenTop > 0.6){
+			//	item.parentFragment.scrollBy(0, (int) (displayMetrics.heightPixels * 0.4));
+			//}
 		}
 
 		@Override
@@ -388,24 +391,21 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 						}
 						E.post(new EmojiReactionsUpdatedEvent(parent.status.id, parent.status.reactions, parent.status.reactions.isEmpty(), adapter.parentHolder));
 						adapter.parentHolder.imgLoader.updateImages();
-					}, null).exec(parent.parentFragment.getAccountID());
+					}, null).exec(parent.accountID);
 				});
-
-				if (parent.parentFragment.isInstanceAkkoma()) {
 					// glitch-soc doesn't have this, afaik
 					btn.setOnLongClickListener(e->{
 						EmojiReaction emojiReaction=parent.status.reactions.get(getAbsoluteAdapterPosition());
 						Bundle args=new Bundle();
-						args.putString("account", parent.parentFragment.getAccountID());
+						args.putString("account", parent.accountID);
 						args.putString("statusID", parent.status.id);
 						int atSymbolIndex = emojiReaction.name.indexOf("@");
 						args.putString("emoji", atSymbolIndex != -1 ? emojiReaction.name.substring(0, atSymbolIndex) : emojiReaction.name);
 						args.putString("url", emojiReaction.getUrl(parent.playGifs));
 						args.putInt("count", emojiReaction.count);
-						Nav.go(parent.parentFragment.getActivity(), StatusEmojiReactionsListFragment.class, args);
+						//Nav.go(parent.activity, StatusEmojiReactionsListFragment.class, args);
 						return true;
 					});
-				}
 			}
 		}
 	}
