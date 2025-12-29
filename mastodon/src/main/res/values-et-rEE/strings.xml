@@ -7,7 +7,7 @@
 	<string name="not_a_mastodon_instance">%s ei tundu olema Mastodoni server.</string>
 	<string name="ok">Sobib</string>
 	<string name="preparing_auth">Valmistun autentimiseks…</string>
-	<string name="finishing_auth">Lõpetan autentimiset…</string>
+	<string name="finishing_auth">Lõpetan autentimist…</string>
 	<string name="user_boosted">%s andis hoogu</string>
 	<string name="in_reply_to">vastuseks kasutajale %s</string>
 	<string name="notifications">Teavitused</string>
@@ -32,9 +32,9 @@
 	<string name="posts">Postitused</string>
 	<string name="posts_and_replies">Postitused ja vastused</string>
 	<string name="media">Meedium</string>
-	<string name="profile_about">Rakenduse teave</string>
+	<string name="profile_about">Profiili teave</string>
 	<string name="button_follow">Jälgi</string>
-	<string name="button_following">Jälgitavat</string>
+	<string name="button_following">Sa jälgid</string>
 	<string name="edit_profile">Muuda profiili</string>
 	<string name="share_user">Jaga profiili kasutades…</string>
 	<string name="mute_user">Summuta %s</string>
@@ -96,7 +96,7 @@
 	<string name="confirm">Kinnita</string>
 	<string name="delete">Kustuta</string>
 	<string name="confirm_delete_title">Kustuta postitus</string>
-	<string name="confirm_delete">Kas oled kindel, et soovid postituse kustutada?</string>
+	<string name="confirm_delete">Kas oled kindel, et soovid selle postituse kustutada?</string>
 	<string name="deleting">Kustutan…</string>
 	<string name="notification_channel_audio_player">Heli taasesitus</string>
 	<string name="play">Esita</string>
@@ -111,7 +111,7 @@
 	<string name="mentions">Mainimised</string>
 	<plurals name="x_people_talking">
 		<item quantity="one">%d inimene suhtleb</item>
-		<item quantity="other">%d inimest suhtlevad</item>
+		<item quantity="other">%d inimest suhtlevad sel teemal</item>
 	</plurals>
 	<string name="report_title">Teata kasutajast %s</string>
 	<string name="report_choose_reason">Mis on sellel postitusel viga?</string>
@@ -164,7 +164,7 @@
 	<string name="add_alt_text">Lisa selgitustekst</string>
 	<string name="visibility_public">Avalik</string>
 	<string name="visibility_followers_only">Jälgijad</string>
-	<string name="visibility_private">Konkreetsed kasutajad</string>
+	<string name="visibility_private">Privaatne mainimine</string>
 	<string name="recent_searches">Hiljutised</string>
 	<string name="notification_type_follow">Uued jälgijad</string>
 	<string name="notification_type_favorite">Lemmikud</string>
@@ -181,7 +181,7 @@
 	<string name="media_attachment_too_big">%1$s faili suurus ületab %2$s MB ülempiiri</string>
 	<string name="settings_theme">Välimus</string>
 	<string name="theme_auto">Kasuta seadme välimust</string>
-	<string name="theme_light">Hele välimus</string>
+	<string name="theme_light">Hele kujundus</string>
 	<string name="theme_dark">Tume kujundus</string>
 	<string name="settings_behavior">Käitumine</string>
 	<string name="settings_gif">Esita animeeritud tunnuspilte ja emojisid</string>
@@ -210,7 +210,7 @@
 	<string name="my_profile">Minu profiil</string>
 	<string name="media_viewer">Meediakuvaja</string>
 	<string name="follow_user">Jälgi kasutajat %s</string>
-	<string name="unfollowed_user">Lõpeta kasutaja %s jälgimine</string>
+	<string name="unfollowed_user">Lõpetasin kasutaja %s jälgimise</string>
 	<string name="followed_user">Sa jälgid nüüd kasutajat %s</string>
 	<string name="following_user_requested">%s soovib sind jälgida</string>
 	<string name="open_in_browser">Ava veebibrauseris</string>
@@ -257,10 +257,10 @@
 		<item quantity="one">%,d hooandmine</item>
 		<item quantity="other">%,d hooandmist</item>
 	</plurals>
-	<string name="time_now">praegu</string>
+	<string name="time_now">just nüüd</string>
 	<string name="edit_history">Muudatuste ajalugu</string>
 	<string name="last_edit_at_x">Viimane muudatus: %s</string>
-	<string name="time_just_now">just praegu</string>
+	<string name="time_just_now">just nüüd</string>
 	<plurals name="x_seconds_ago">
 		<item quantity="one">%d sekund tagasi</item>
 		<item quantity="other">%d sekundit tagasi</item>
@@ -301,7 +301,7 @@
 	<string name="empty_list">See loend on tühi</string>
 	<string name="instance_signup_closed">Koduserver hetkel ei võimalda uuteel kasutajatel registreeruda.</string>
 	<string name="text_copied">Kopeeritud lõikelauale</string>
-	<string name="add_bookmark">Järjehoidja</string>
+	<string name="add_bookmark">Lisa järjehoidjana</string>
 	<string name="remove_bookmark">Eemalda järjehoidja</string>
 	<string name="bookmarks">Järjehoidjad</string>
 	<string name="your_favorites">Lemmikud</string>
@@ -352,7 +352,7 @@
 	<string name="welcome_to_mastodon">Tere tulemast Mastodoni</string>
 	<string name="welcome_paragraph1">Mastodon on hajutatud sotsiaalvõrgustik, mis tähendab, et seda ei kontrolli üks ja ainus organisatsioon või äriühing. Võrgustikus tegutsevad omavahel ühendatud paljud erinevad koduserverid.</string>
 	<string name="what_are_servers">Mis on koduserverid?</string>
-	<string name="welcome_paragraph2">Iga Mastodoni konto asub mõnes serveris - neist igal ühel on omad reeglid, väärtusd ja haldajad. Pole vahet mis serverit sa kasutad - sa võid jälgida kasutajaid kõikidest teistest koduservereist ning nendega suhelda.</string>
+	<string name="welcome_paragraph2">Iga Mastodoni konto asub mõnes serveris - neist igal ühel on omad reeglid, väärtused ja haldajad. Pole vahet, mis serverit sa kasutad - sa võid jälgida kasutajaid kõikidest teistest koduservereist ning nendega suhelda.</string>
 	<string name="opening_link">Avan linki…</string>
 	<string name="link_not_supported">Selle lingi avamine pole rakenduses toetatud</string>
 	<string name="log_out_all_accounts">Logi kõikidest kasutajakontodest välja</string>
@@ -410,8 +410,8 @@
 	<string name="settings_filters">Filtrid</string>
 	<string name="settings_server_explanation">Ülevaade, reeglid, moderaatorid</string>
 	<!-- %s is the app name (Mastodon, key app_name). I made it a placeholder so everything Just Works™ with forks -->
-	<string name="about_app">Rakenduse teave: %s</string>
-	<string name="default_post_language">Postituse vaikimisi keel</string>
+	<string name="about_app">Teave %s kohta</string>
+	<string name="default_post_language">Postituse keel</string>
 	<string name="settings_alt_text_reminders">Lisa selgitusteksti meeldetuletusi</string>
 	<string name="settings_confirm_unfollow">Küsi kinnitust enne jälgimise lõpetamist</string>
 	<string name="settings_confirm_boost">Küsi kinnitust enne hooandmist</string>
@@ -440,7 +440,7 @@
 	<string name="pause_notifications_banner">Teavitused jätkuvad %s.</string>
 	<string name="resume_notifications_now">Jätka kohe</string>
 	<string name="open_system_notification_settings">Ava teavituste seadistused</string>
-	<string name="about_server">Rakenduse teave</string>
+	<string name="about_server">Serveri teave</string>
 	<string name="server_rules">Reeglid</string>
 	<string name="server_administrator">Peakasutaja</string>
 	<string name="send_email_to_server_admin">Saada sõnum peakasutajale</string>
@@ -466,7 +466,7 @@
 		<item quantity="one">%d tund tagasi</item>
 		<item quantity="other">%d tundi tagasi</item>
 	</plurals>
-	<string name="alt_text_reminder_title">Meediafaili puudub selgitustekst</string>
+	<string name="alt_text_reminder_title">Meediafailil puudub selgitustekst</string>
 	<plurals name="alt_text_reminder_x_images">
 		<item quantity="one">%s-l sinu lisatud pildil puudub selgitustekst. Kas jätkad postitamisega?</item>
 		<item quantity="other">%s-l sinu lisatud pildil puuduvad selgitustekstid. Kas jätkad postitamisega?</item>
@@ -481,7 +481,7 @@
 	<string name="count_four">Neli</string>
 	<string name="alt_text_reminder_post_anyway">Postita</string>
 	<!-- %s is the username -->
-	<string name="unfollow_confirmation">Kas lõpetad %s kasutaja jälgimine?</string>
+	<string name="unfollow_confirmation">Kas lõpetad %s kasutaja jälgimise?</string>
 	<string name="filter_active">Aktiivne</string>
 	<string name="filter_inactive">Mitteaktiivne</string>
 	<string name="settings_add_filter">Lisa filter</string>
@@ -612,7 +612,7 @@
 	<string name="reply_to_user">Vasta kasutajale %s</string>
 	<string name="posted_at">Postitatud %s</string>
 	<string name="non_mutual_sheet_title">Tere tulemast uus suhtluspartner!</string>
-	<string name="non_mutual_sheet_text">Tundub, et oled vastamas kasutajale, kellega sa pole veel seotud. On väga hea, kui esimene mulje jääb suurepärane.</string>
+	<string name="non_mutual_sheet_text">Tundub, et oled vastamas kasutajale, kellega sa pole veel seotud. Ära unusta, et esmamulje on tähtis.</string>
 	<string name="got_it">Sain aru</string>
 	<string name="dont_remind_again">Ära tuleta enam meelde</string>
 	<!-- %s is a time interval ("5 months") -->
@@ -717,7 +717,7 @@ Mida rohkem inimesi sa tead, seda aktiivsem ja huvitavam ta saab olema.</string>
 	<string name="notification_filter_followers">Sind mittejälgivad kasutajad</string>
 	<string name="notification_filter_followers_explanation">Sealhulgas need, kes on sind jälginud alla 3 päeva</string>
 	<string name="notification_filter_new_accounts">Uued kasutajakontod</string>
-	<string name="notification_filter_new_accounts_explanation">Loodud viimae 30 päeva jooksul</string>
+	<string name="notification_filter_new_accounts_explanation">Loodud viimase 30 päeva jooksul</string>
 	<string name="notification_filter_mentions">Soovimatud privaatsed mainimised</string>
 	<string name="notification_filter_mentions_explanation">Filtreeritud, kui see pole vastus sinupoolt mainimisele või kui jälgid saatjat</string>
 	<string name="allow_notifications">Luba teavitused</string>
@@ -730,7 +730,7 @@ Mida rohkem inimesi sa tead, seda aktiivsem ja huvitavam ta saab olema.</string>
 	<string name="notifications_muted">Teavitus kasutajalt %s on suletud.</string>
 	<string name="notifications_allowed">%s on nüüd nähtav sinu teavituste loendis.</string>
 	<string name="visibility_subtitle_public">Nii kasutajad kui mittekasutajad</string>
-	<string name="visibility_subtitle_unlisted">Vähem algoritmilisi teavitusi</string>
+	<string name="visibility_subtitle_unlisted">Peidetud Mastodoni otsingutulemustest, pupulaarsust koguva sisu voost ja avalikult ajajoonelt</string>
 	<string name="visibility_subtitle_followers">Ainult jälgijad</string>
 	<string name="visibility_subtitle_private">Kõik, kes on postituses mainitud</string>
 	<string name="view_boosts">Vaata hooandmisi</string>
@@ -757,7 +757,7 @@ Mida rohkem inimesi sa tead, seda aktiivsem ja huvitavam ta saab olema.</string>
 	<string name="donation_success_share">Räägi meist</string>
 	<string name="donation_success_title">Täname sind sinu toetuse eest!</string>
 	<string name="donation_success_subtitle">Üsna pea peaksid saama toetuse kohta kinnituskirja.</string>
-	<string name="donation_server_error">Peame vabandama, tekkis viga ja meil pole võimali sinu toetust töödelda.\n\nPalun proovi uuesti mõne minuti pärast.</string>
+	<string name="donation_server_error">Peame vabandama, tekkis viga ja meil pole võimalik sinu toetust töödelda.\n\nPalun proovi uuesti mõne minuti pärast.</string>
 	<string name="settings_donate">Toeta Mastodoni</string>
 	<string name="settings_manage_donations">Halda toetusi</string>
 	<string name="cant_load_image">Pildi laadimine ei õnnestunud</string>
@@ -832,8 +832,8 @@ Mida rohkem inimesi sa tead, seda aktiivsem ja huvitavam ta saab olema.</string>
 	</plurals>
 	<!-- appears when you're about to block a server -->
 	<plurals name="server_x_followers_will_be_removed">
-		<item quantity="one">Eemaldatakse %,d jälgija sellest serverist.</item>
-		<item quantity="other">Eemaldatakse %,d jälgijat sellest serverist.</item>
+		<item quantity="one">%,d jälgija eemaldamine antud serverist.</item>
+		<item quantity="other">%,d jälgija eemaldamine antud serverist.</item>
 	</plurals>
 	<!-- The complete string will look like "You will lose X followers and Y people you follow". See will_lose_x_followers and will_lose_x_following -->
 	<string name="server_x_followers_and_following_will_be_removed">Sa kaotad %1$s ja %2$s.</string>
@@ -871,4 +871,54 @@ Mida rohkem inimesi sa tead, seda aktiivsem ja huvitavam ta saab olema.</string>
 	<string name="quote_post_pending_explanation">Mastodonis saad sa kontrollida seda, kes võib sind tsiteerida. See postitus on seni ootel, kuni pole algse autori kinnitust tsiteerimisele.</string>
 	<!-- %s is a username, i.e. @Gargron -->
 	<string name="nested_quote">Tsiteeris kasutaja %s postitust</string>
+	<string name="compose_visibility_public_anyone">Avalik, kõik võivad tsiteerida</string>
+	<string name="compose_visibility_public_limited">Avalik, tsiteerimine on piiratud</string>
+	<string name="compose_visibility_public_disabled">Avalik, tsiteerimine on keelatud</string>
+	<string name="compose_visibility_unlisted_anyone">Vaikne, aga avalik, kõik võivad tsiteerida</string>
+	<string name="compose_visibility_unlisted_limited">Vaikne, aga avalik, tsiteerimine on piiratud</string>
+	<string name="compose_visibility_unlisted_disabled">Vaikne, aga avalik, tsiteerimine on keelatud</string>
+	<string name="compose_visibility_title">Nähtavus ja suhestumine</string>
+	<!-- %s is current user's full username, e.g. @example@mastodon.social -->
+	<string name="compose_visibility_explanation">Halda seda, kes võivad antud postitusega suhestuda. Üldised eelistused leiduvad siin: Seadistused &gt; %s &gt; Postituste vaikeseadistused.</string>
+	<string name="compose_visibility">Nähtavus</string>
+	<string name="compose_quote_policy">Kes võivad tsiteerida</string>
+	<string name="quote_policy_public">Kõik</string>
+	<string name="quote_policy_followers">Ainult jälgijad</string>
+	<string name="quote_policy_nobody">Ainult mina</string>
+	<string name="quote_policy_for_unlisted_explanation">Kui teised kasutajad sind tsiteerivad, siis nende postitused peidetakse ajajoonelt, mis näitavad populaarsust koguvaid postitusi.</string>
+	<string name="quote_policy_for_private_explanation">Ainult jälgijatele mõeldud Mastodoni postitusi ei saa teiste poolt tsiteerida.</string>
+	<string name="quote_policy_for_direct_explanation">Ainult mainituile mõeldud Mastodoni postitusi ei saa teiste poolt tsiteerida.</string>
+	<string name="change_quote_policy">Muuda seda, kes võivad tsiteerida</string>
+	<string name="edit_visibility_explanation">Avaldatud postitused ei saa muuta oma nähtavust.</string>
+	<string name="user_quoted_post">%s tsiteeris sinu postitust:</string>
+	<string name="user_edited_quoted_post">%s on muutnud sinu poolt tsiteeritud postitust</string>
+	<string name="notification_type_quote">Tsitaadid</string>
+	<string name="create_quote">Tsiteeri</string>
+	<string name="cannot_quote_post">Sul pole õigust seda postitust tsiteerida</string>
+	<string name="cannot_quote_post_followers_only">Vaid jälgijad saavad seda postitust tsiteerida</string>
+	<string name="compose_hint_quote">Lisa vestlusele omapoolne panus</string>
+	<string name="cancel_quote">Katkesta tsiteerimine</string>
+	<string name="unlisted_quote_alert_title">Vaikse, aga avaliku postituse tsiteerimine</string>
+	<string name="unlisted_quote_alert">Vaikse, aga avaliku postituse tsiteerimisel sinu postitus on peidetud populaarsust koguvatel ajajoontel.</string>
+	<string name="settings_posting_defaults">Postitamise vaikeseadistused</string>
+	<string name="default_post_visibility">Postituse nähtavus</string>
+	<string name="create_quote_manual_approval">Küsi võimalust tsiteerida</string>
+	<string name="create_quote_manual_approval_subtitle">Autor vaatab selle üle</string>
+	<plurals name="x_quotes">
+		<item quantity="one">%,d tsitaat</item>
+		<item quantity="other">%,d tsitaati</item>
+	</plurals>
+	<string name="remove_quote">Eemalda minu tsitaat postituses, mille tegi %s</string>
+	<string name="remove_quote_confirm_title">Kas eemaldame postituse?</string>
+	<string name="remove_quote_confirm">Seda tegevust ei saa tagasi pöörata.</string>
+	<string name="remove_quote_button">Eemalda postitus</string>
+	<string name="settings_posting_defaults_explanation">Järgnevad seadistused on uute postituste koostamisel kasutusel vaikimisi valikutena, kuid neid saad posituse kirjutamisel ka muuta.</string>
+	<string name="cant_quote_in_private_title">Tsitaate ei saa privaatse mainimise puhul lõimida</string>
+	<string name="cant_quote_in_private">Kui sa need seadistused salvestad, siis lõimitud tsitaat muutub lingiks.</string>
+	<string name="quote_followers_only_confirm_title">Kas jagad jälgijate ja mainitud kasutajatega?</string>
+	<string name="quote_followers_only_confirm">Nii see, keda sa tsiteerid, kui need, keda mainid, saavad asjakohase teavituse ja võivad vaadata sinu postitust ka siis, kui nad pole sinu jälgijad.</string>
+	<string name="quote_followers_only_publish">Avalda postitus</string>
+	<string name="quote_followers_only_cancel">Tagasi muutmise juurde</string>
+	<string name="quote_followers_only_dont_show_again">Ära enam näita seda sõnumit uuesti</string>
+	<string name="more_replies_found">Leidub veel vastuseid</string>
 </resources>

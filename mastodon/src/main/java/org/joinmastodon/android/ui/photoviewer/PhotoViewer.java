@@ -748,20 +748,44 @@ public class PhotoViewer implements ZoomPanView.Listener{
 
 	private OutputStream destinationStreamForFile(Attachment att) throws IOException{
 		String fileName=Uri.parse(att.url).getLastPathSegment();
+		if(TextUtils.isEmpty(fileName))
+			fileName="MastodonImage_"+System.currentTimeMillis()+".jpg";
+		int dotIndex=fileName.lastIndexOf('.');
+		if(dotIndex==-1 || dotIndex<fileName.length()-5){
+			fileName+=".jpg";
+		}
 		if(Build.VERSION.SDK_INT>=29){
-			ContentValues values=new ContentValues();
-//			values.put(MediaStore.Downloads.DOWNLOAD_URI, att.url);
-			values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-			values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-			String mime=mimeTypeForFileName(fileName);
-			if(mime!=null)
-				values.put(MediaStore.MediaColumns.MIME_TYPE, mime);
+			Uri itemUri;
+			try{
+				itemUri=tryInsertImage(fileName);
+			}catch(IllegalStateException x){
+				// "Failed to build unique file"
+				String ext=fileName.substring(fileName.lastIndexOf('.'));
+				fileName="MastodonImage_"+System.currentTimeMillis()+ext;
+				itemUri=tryInsertImage(fileName);
+			}
 			ContentResolver cr=activity.getContentResolver();
-			Uri itemUri=cr.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values);
 			return cr.openOutputStream(itemUri);
 		}else{
-			return new FileOutputStream(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName));
+			File file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+			if(file.exists()){
+				String ext=fileName.substring(fileName.lastIndexOf('.'));
+				fileName="MastodonImage_"+System.currentTimeMillis()+ext;
+				file=new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+			}
+			return new FileOutputStream(file);
 		}
+	}
+
+	private Uri tryInsertImage(String fileName){
+		ContentValues values=new ContentValues();
+		values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+		values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+		String mime=mimeTypeForFileName(fileName);
+		if(mime!=null)
+			values.put(MediaStore.MediaColumns.MIME_TYPE, mime);
+		ContentResolver cr=activity.getContentResolver();
+		return cr.insert(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY), values);
 	}
 
 	private void doSaveCurrentFile(){
@@ -1064,6 +1088,7 @@ public class PhotoViewer implements ZoomPanView.Listener{
 		public MediaPlayer player;
 		private Surface surface;
 		private boolean playerReady;
+		private boolean playerStarted;
 		private boolean keepingScreenOn;
 		private ProgressBar progressBar;
 
@@ -1134,13 +1159,14 @@ public class PhotoViewer implements ZoomPanView.Listener{
 		@Override
 		public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface){
 			// A new frame of video was rendered. Clear the thumbnail or paused frame, if any, to avoid overdraw and free up some memory.
-			if(player.isPlaying() && wrap.getBackground()!=null){
+			if(playerReady && playerStarted && wrap.getBackground()!=null){
 				wrap.setBackground(null);
 			}
 		}
 
 		private void startPlayer(){
 			player.setSurface(surface);
+			playerStarted=true;
 			if(item.type==Attachment.Type.VIDEO){
 				incKeepScreenOn();
 				keepingScreenOn=true;
@@ -1166,6 +1192,7 @@ public class PhotoViewer implements ZoomPanView.Listener{
 
 		public void prepareAndStartPlayer(){
 			playerReady=false;
+			playerStarted=false;
 			player=new MediaPlayer();
 			players.add(player);
 			player.setOnPreparedListener(this);
@@ -1189,6 +1216,7 @@ public class PhotoViewer implements ZoomPanView.Listener{
 
 		public void reset(){
 			playerReady=false;
+			playerStarted=false;
 			player.release();
 			players.remove(player);
 			player=null;

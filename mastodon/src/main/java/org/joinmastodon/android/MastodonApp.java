@@ -3,10 +3,12 @@ package org.joinmastodon.android;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.util.Log;
 import android.webkit.WebView;
 
 import org.joinmastodon.android.api.PushSubscriptionManager;
+import org.joinmastodon.android.ui.utils.UiUtils;
 import org.joinmastodon.android.updater.GithubSelfUpdater;
 
 import me.grishka.appkit.imageloader.ImageCache;
@@ -28,11 +30,18 @@ public class MastodonApp extends Application{
 		params.maxMemoryCacheSize=Integer.MAX_VALUE;
 		ImageCache.setParams(params);
 		NetworkUtils.setUserAgent("MastodonAndroid/"+BuildConfig.VERSION_NAME);
+		UiUtils.updateLocalizedDateFormatters(context);
 
 		PushSubscriptionManager.tryRegisterFCM();
 		GlobalUserPreferences.load();
 		if(BuildConfig.DEBUG){
 			WebView.setWebContentsDebuggingEnabled(true);
 		}
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);
+		UiUtils.updateLocalizedDateFormatters(context);
 	}
 }
