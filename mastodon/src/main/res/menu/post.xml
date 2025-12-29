@@ -10,10 +10,12 @@
 		<item android:id="@+id/edit" android:title="@string/edit"/>
 		<item android:id="@+id/delete" android:title="@string/delete"/>
 		<item android:id="@+id/mute_conversation" android:title="@string/mute_conversation"/>
+		<item android:id="@+id/change_quote_policy" android:title="@string/change_quote_policy"/>
 	</group>
 	<group android:id="@+id/menu_group2">
 		<item android:id="@+id/add_to_list" android:title="@string/add_user_to_list"/>
 		<item android:id="@+id/follow" android:title="@string/follow_user"/>
+		<item android:id="@+id/remove_quote"/>
 		<item android:id="@+id/mute" android:title="@string/mute_user"/>
 		<item android:id="@+id/block" android:title="@string/block_user"/>
 		<item android:id="@+id/report" android:title="@string/report_user"/>

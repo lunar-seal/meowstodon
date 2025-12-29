@@ -168,7 +168,7 @@
 	<string name="add_alt_text">Add alt text</string>
 	<string name="visibility_public">Public</string>
 	<string name="visibility_followers_only">Followers</string>
-	<string name="visibility_private">Specific people</string>
+	<string name="visibility_private">Private mention</string>
 	<string name="recent_searches">Recents</string>
 	<string name="notification_type_follow">New followers</string>
 	<string name="notification_type_favorite">Favorites</string>
@@ -416,7 +416,7 @@
 	<string name="settings_server_explanation">Overview, rules, moderators</string>
 	<!-- %s is the app name (Mastodon, key app_name). I made it a placeholder so everything Just Works™ with forks -->
 	<string name="about_app">About %s</string>
-	<string name="default_post_language">Default post language</string>
+	<string name="default_post_language">Posting language</string>
 	<string name="settings_alt_text_reminders">Add alt text reminders</string>
 	<string name="settings_confirm_unfollow">Ask before unfollowing someone</string>
 	<string name="settings_confirm_boost">Ask before boosting</string>
@@ -738,7 +738,7 @@
 	<string name="notifications_muted">Notifications from %s have been dismissed.</string>
 	<string name="notifications_allowed">%s will now appear in your notification list.</string>
 	<string name="visibility_subtitle_public">Everyone on and off Mastodon</string>
-	<string name="visibility_subtitle_unlisted">Fewer algorithmic fanfares</string>
+	<string name="visibility_subtitle_unlisted">Hidden from Mastodon search results, trending, and public timelines</string>
 	<string name="visibility_subtitle_followers">Only your followers</string>
 	<string name="visibility_subtitle_private">Everyone mentioned in the post</string>
 	<string name="view_boosts">View boosts</string>
@@ -886,4 +886,46 @@
 	<string name="quote_post_pending_explanation">On Mastodon, you can control whether someone can quote you. This post is pending while we’re getting the original author’s approval.</string>
 	<!-- %s is a username, i.e. @Gargron -->
 	<string name="nested_quote">Quoted a post by %s</string>
+	<string name="compose_visibility_public_anyone">Public, anyone can quote</string>
+	<string name="compose_visibility_public_limited">Public, quotes limited</string>
+	<string name="compose_visibility_public_disabled">Public, quotes disabled</string>
+	<string name="compose_visibility_unlisted_anyone">Quiet public, anyone can quote</string>
+	<string name="compose_visibility_unlisted_limited">Quiet public, quotes limited</string>
+	<string name="compose_visibility_unlisted_disabled">Quiet public, quotes disabled</string>
+	<string name="compose_visibility_title">Visibility and interaction</string>
+	<!-- %s is current user's full username, e.g. @example@mastodon.social -->
+	<string name="compose_visibility_explanation"><![CDATA[Control who can interact with this post. Global settings can be found under Settings > %s > Posting defaults.]]></string>
+	<string name="compose_visibility">Visibility</string>
+	<string name="compose_quote_policy">Who can quote</string>
+	<string name="quote_policy_public">Anyone</string>
+	<string name="quote_policy_followers">Followers only</string>
+	<string name="quote_policy_nobody">Just me</string>
+	<string name="quote_policy_for_unlisted_explanation">When people quote you, their post will also be hidden from trending timelines.</string>
+	<string name="quote_policy_for_private_explanation">Follower-only posts authored on Mastodon can\'t be quoted by others.</string>
+	<string name="quote_policy_for_direct_explanation">Private mentions authored on Mastodon can\'t be quoted by others.</string>
+	<string name="change_quote_policy">Change who can quote</string>
+	<string name="edit_visibility_explanation">Published posts cannot change their visibility.</string>
+	<string name="user_quoted_post">%s quoted your post:</string>
+	<string name="user_edited_quoted_post">%s edited a post you quoted</string>
+	<string name="notification_type_quote">Quotes</string>
+	<string name="create_quote">Quote</string>
+	<string name="cannot_quote_post">You are not allowed to quote this post</string>
+	<string name="cannot_quote_post_followers_only">Only followers can quote this post</string>
+	<string name="compose_hint_quote">Add something to the conversation</string>
+	<string name="cancel_quote">Cancel quote</string>
+	<string name="unlisted_quote_alert_title">Quoting quiet public posts</string>
+	<string name="unlisted_quote_alert">When quoting a quiet public post, your post will be hidden from trending timelines.</string>
+	<string name="settings_posting_defaults">Posting defaults</string>
+	<string name="default_post_visibility">Posting visibility</string>
+	<string name="create_quote_manual_approval">Request to quote</string>
+	<string name="create_quote_manual_approval_subtitle">Author will manually review</string>
+	<plurals name="x_quotes">
+		<item quantity="one">%,d quote</item>
+		<item quantity="other">%,d quotes</item>
+	</plurals>
+	<string name="remove_quote">Remove my post from %s\'s post</string>
+	<string name="remove_quote_confirm_title">Remove post?</string>
+	<string name="remove_quote_confirm">This action cannot be undone.</string>
+	<string name="remove_quote_button">Remove post</string>
+	<string name="settings_posting_defaults_explanation">These settings will be used as defaults when you create new posts, but you can edit them per post within the composer.</string>
 </resources>

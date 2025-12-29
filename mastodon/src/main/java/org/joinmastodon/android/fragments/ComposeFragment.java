@@ -9,12 +9,13 @@ import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Outline;
+import android.graphics.Insets;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.icu.text.BreakIterator;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -34,7 +35,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewOutlineProvider;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.InputConnection;
@@ -45,7 +46,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.twitter.twittertext.TwitterTextEmojiRegex;
@@ -70,6 +70,7 @@ import org.joinmastodon.android.model.Mention;
 import org.joinmastodon.android.model.Preferences;
 import org.joinmastodon.android.model.Status;
 import org.joinmastodon.android.model.StatusPrivacy;
+import org.joinmastodon.android.model.StatusQuotePolicy;
 import org.joinmastodon.android.model.viewmodel.ListItem;
 import org.joinmastodon.android.ui.CustomEmojiPopupKeyboard;
 import org.joinmastodon.android.ui.ExtendedPopupMenu;
@@ -77,7 +78,9 @@ import org.joinmastodon.android.ui.M3AlertDialogBuilder;
 import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.PopupKeyboard;
 import org.joinmastodon.android.ui.displayitems.InlineStatusStatusDisplayItem;
+import org.joinmastodon.android.ui.displayitems.StatusDisplayItem;
 import org.joinmastodon.android.ui.drawables.SpoilerStripesDrawable;
+import org.joinmastodon.android.ui.sheets.ComposerVisibilitySheet;
 import org.joinmastodon.android.ui.text.ComposeAutocompleteSpan;
 import org.joinmastodon.android.ui.text.ComposeHashtagOrMentionSpan;
 import org.joinmastodon.android.ui.text.HtmlParser;
@@ -91,12 +94,14 @@ import org.joinmastodon.android.ui.views.ComposeEditText;
 import org.joinmastodon.android.ui.views.CustomScrollView;
 import org.joinmastodon.android.ui.views.NestedRecyclerScrollView;
 import org.joinmastodon.android.ui.views.SizeListenerLinearLayout;
+import org.joinmastodon.android.ui.views.StatusView;
 import org.joinmastodon.android.ui.views.TopBarsScrollAwayLinearLayout;
 import org.joinmastodon.android.utils.ViewImageLoaderHolderTarget;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -147,10 +152,12 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	private TextView visibilityText1, visibilityText2, visibilityCurrentText;
 	private LinearLayout bottomBar;
 	private View autocompleteDivider;
+	private FrameLayout quotedPostWrap;
 
 	private List<EmojiCategory> customEmojis;
 	private CustomEmojiPopupKeyboard emojiKeyboard;
 	private Status replyTo;
+	private Status quotedStatus;
 	private String initialText;
 	private String uuid;
 	private EditText spoilerEdit;
@@ -160,6 +167,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	private View sendingOverlay;
 	private WindowManager wm;
 	private StatusPrivacy statusVisibility=StatusPrivacy.PUBLIC;
+	private StatusQuotePolicy statusQuotePolicy=StatusQuotePolicy.PUBLIC;
 	private ComposeAutocompleteSpan currentAutocompleteSpan;
 	private FrameLayout mainEditTextWrap;
 	private ComposeLanguageAlertViewController.SelectedOption postLang;
@@ -180,8 +188,9 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 
 	private Runnable emojiKeyboardHider;
 	private Runnable sendingBackButtonBlocker=()->{};
-	private Runnable discardConfirmationCallback=this::confirmDiscardDraftAndFinish;
+	private Runnable discardConfirmationCallback=this::confirmDiscardDraftBackCallback;
 	private boolean prevHadDraft;
+	private boolean keyboardVisible;
 
 	public ComposeFragment(){
 		super(R.layout.toolbar_fragment_with_progressbar);
@@ -219,6 +228,9 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		setTitle(editingStatus==null ? R.string.new_post : R.string.edit_post);
 		if(savedInstanceState!=null)
 			postLang=Parcels.unwrap(savedInstanceState.getParcelable("postLang"));
+
+		if(getArguments().containsKey("quote"))
+			quotedStatus=Parcels.unwrap(getArguments().getParcelable("quote"));
 	}
 
 	@Override
@@ -278,13 +290,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		selfUsername.setText('@'+self.username+'@'+instanceDomain);
 		if(self.avatar!=null)
 			ViewImageLoader.load(selfAvatar, null, new UrlImageLoaderRequest(self.avatar));
-		ViewOutlineProvider roundCornersOutline=new ViewOutlineProvider(){
-			@Override
-			public void getOutline(View view, Outline outline){
-				outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), V.dp(12));
-			}
-		};
-		selfAvatar.setOutlineProvider(roundCornersOutline);
+		selfAvatar.setOutlineProvider(OutlineProviders.roundedRect(12));
 		selfAvatar.setClipToOutline(true);
 		bottomBar=view.findViewById(R.id.bottom_bar);
 
@@ -298,6 +304,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		visibilityCurrentText=visibilityText1;
 		languageBtn=view.findViewById(R.id.btn_language);
 		replyWrap=view.findViewById(R.id.reply_wrap);
+		quotedPostWrap=view.findViewById(R.id.quoted_post_wrap);
 
 		mediaBtn.setOnClickListener(v->openFilePicker(false));
 		if(UiUtils.isPhotoPickerAvailable()){
@@ -311,13 +318,15 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		spoilerBtn.setOnClickListener(v->toggleSpoiler());
 		languageBtn.setOnClickListener(v->showLanguageAlert());
 		visibilityBtn.setOnClickListener(this::onVisibilityClick);
-		visibilityBtn.setAccessibilityDelegate(new View.AccessibilityDelegate(){
-			@Override
-			public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfo info){
-				super.onInitializeAccessibilityNodeInfo(host, info);
-				info.setClassName("android.widget.Spinner");
-			}
-		});
+		if(!instance.supportsQuotePostAuthoring()){
+			visibilityBtn.setAccessibilityDelegate(new View.AccessibilityDelegate(){
+				@Override
+				public void onInitializeAccessibilityNodeInfo(@NonNull View host, @NonNull AccessibilityNodeInfo info){
+					super.onInitializeAccessibilityNodeInfo(host, info);
+					info.setClassName("android.widget.Spinner");
+				}
+			});
+		}
 		Drawable arrow=getResources().getDrawable(R.drawable.ic_baseline_arrow_drop_down_18, getActivity().getTheme()).mutate();
 		arrow.setTint(UiUtils.getThemeColor(getActivity(), R.attr.colorM3OnSurface));
 		emojiKeyboard.setOnIconChangedListener(new PopupKeyboard.OnIconChangeListener(){
@@ -361,10 +370,13 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 			spoilerBtn.setSelected(true);
 		}
 
-		if(editingStatus!=null && editingStatus.visibility!=null) {
+		if(editingStatus!=null && editingStatus.visibility!=null){
 			statusVisibility=editingStatus.visibility;
+			if(editingStatus.quoteApproval!=null){
+				statusQuotePolicy=editingStatus.quoteApproval.toQuotePolicy();
+			}
 		}
-		updateVisibilityIcon(false);
+		updateVisibilityButton(false);
 
 		autocompleteViewController=new ComposeAutocompleteViewController(getActivity(), accountID);
 		autocompleteViewController.setCompletionSelectedListener(new ComposeAutocompleteViewController.AutocompleteListener(){
@@ -397,6 +409,15 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		NestedRecyclerScrollView outerScroller=view.findViewById(R.id.outer_scroller);
 		CustomScrollView innerScroller=view.findViewById(R.id.inner_scroller);
 		outerScroller.setScrollableChildSupplier(()->innerScroller);
+
+		view.findViewById(R.id.quote_post_remove).setOnClickListener(v->{
+			if(quotedStatus!=null){
+				quotedStatus=null;
+				quotedPostWrap.setVisibility(View.GONE);
+				updateMediaPollStates();
+				mainEditText.setHint(R.string.compose_hint);
+			}
+		});
 
 		creatingView=false;
 
@@ -528,7 +549,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		});
 		spoilerEdit.addTextChangedListener(new SimpleTextWatcher(e->updateCharCounter()));
 		if(replyTo!=null){
-			InlineStatusStatusDisplayItem item=new InlineStatusStatusDisplayItem("reply", this, replyTo, accountID, R.drawable.ic_reply_wght700_20px, getString(R.string.in_reply_to, replyTo.account.displayName));
+			InlineStatusStatusDisplayItem item=new InlineStatusStatusDisplayItem("reply", new StatusDisplayItem.NoOpCallbacks(getActivity()), getActivity(), replyTo, accountID, R.drawable.ic_reply_wght700_20px, getString(R.string.in_reply_to, replyTo.account.displayName));
 			item.fullWidth=true;
 			InlineStatusStatusDisplayItem.Holder holder=new InlineStatusStatusDisplayItem.Holder(getActivity(), replyWrap);
 			replyWrap.addView(holder.itemView);
@@ -565,8 +586,29 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 			}
 		}else{
 			replyWrap.setVisibility(View.GONE);
-//			mainLayout.setTopBarsCount(0);
 		}
+
+		if(quotedStatus!=null){
+			quotedPostWrap.setVisibility(View.VISIBLE);
+			StatusView sv=new StatusView(getActivity(), this);
+			sv.addItems(StatusDisplayItem.buildItems(null, getActivity(), quotedStatus, accountID, quotedStatus, Map.of(), StatusDisplayItem.FLAG_NO_FOOTER | StatusDisplayItem.FLAG_IS_QUOTE | StatusDisplayItem.FLAG_FULL_WIDTH));
+			LinearLayout.LayoutParams headerLP=(LinearLayout.LayoutParams) sv.getChildAt(0).getLayoutParams();
+			headerLP.setMarginEnd(V.dp(48-16));
+			headerLP.setMarginStart(V.dp(-4));
+			quotedPostWrap.addView(sv);
+			mainEditText.setHint(R.string.compose_hint_quote);
+			if(savedInstanceState==null && quotedStatus.visibility==StatusPrivacy.UNLISTED && !GlobalUserPreferences.alertSeen("quoteUnlisted")){
+				view.postDelayed(()->{
+					new M3AlertDialogBuilder(getActivity())
+							.setTitle(R.string.unlisted_quote_alert_title)
+							.setMessage(R.string.unlisted_quote_alert)
+							.setPositiveButton(R.string.dismiss, (dlg, which)->{})
+							.setNegativeButton(R.string.dont_remind_again, (dlg, which)->GlobalUserPreferences.setAlertSeen("quoteUnlisted"))
+							.show();
+				}, 200);
+			}
+		}
+
 		if(savedInstanceState==null){
 			if(editingStatus!=null){
 				initialText=getArguments().getString("sourceText", "");
@@ -596,6 +638,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		if(editingStatus!=null){
 			updateCharCounter();
 			visibilityBtn.setEnabled(false);
+			visibilityBtn.setAlpha(0.5f);
 		}
 		updateMediaPollStates();
 	}
@@ -786,6 +829,10 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		if(postLang!=null){
 			req.language=postLang.locale.toLanguageTag();
 		}
+		if(statusQuotePolicy!=null && instance.supportsQuotePostAuthoring())
+			req.quoteApprovalPolicy=statusQuotePolicy;
+		if(quotedStatus!=null)
+			req.quotedStatusId=quotedStatus.id;
 		if(uuid==null)
 			uuid=UUID.randomUUID().toString();
 
@@ -897,6 +944,25 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 		}
 	}
 
+	@Override
+	public void onApplyWindowInsets(WindowInsets insets){
+		if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R){
+			Insets imeInsets=insets.getInsets(WindowInsets.Type.ime());
+			keyboardVisible=imeInsets.left>0 || imeInsets.top>0 || imeInsets.right>0 || imeInsets.bottom>0;
+		}
+		super.onApplyWindowInsets(insets);
+	}
+
+	private void confirmDiscardDraftBackCallback(){
+		// If the back callback was set with the keyboard active, it will be invoked first.
+		// So, dismiss the keyboard first, because of course that's what the user expects.
+		if(keyboardVisible){
+			getActivity().getSystemService(InputMethodManager.class).hideSoftInputFromWindow(contentView.getWindowToken(), 0);
+			return;
+		}
+		confirmDiscardDraftAndFinish();
+	}
+
 	private void confirmDiscardDraftAndFinish(){
 		new M3AlertDialogBuilder(getActivity())
 				.setTitle(editingStatus==null ? R.string.discard_draft : R.string.discard_changes)
@@ -964,8 +1030,8 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 
 	public void updateMediaPollStates(){
 		pollBtn.setSelected(pollViewController.isShown());
-		mediaBtn.setEnabled(!pollViewController.isShown() && mediaViewController.canAddMoreAttachments());
-		pollBtn.setEnabled(mediaViewController.isEmpty());
+		mediaBtn.setEnabled(!pollViewController.isShown() && mediaViewController.canAddMoreAttachments() && quotedStatus==null);
+		pollBtn.setEnabled(mediaViewController.isEmpty() && quotedStatus==null);
 	}
 
 	private void togglePoll(){
@@ -990,20 +1056,33 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	}
 
 	private void onVisibilityClick(View v){
-		ArrayList<ListItem<StatusPrivacy>> items=new ArrayList<>();
-		ExtendedPopupMenu menu=new ExtendedPopupMenu(getActivity(), items);
-		Consumer<ListItem<StatusPrivacy>> onClick=i->{
-			if(statusVisibility!=i.parentObject){
-				statusVisibility=i.parentObject;
-				updateVisibilityIcon(true);
-			}
-			menu.dismiss();
-		};
-		items.add(new ListItem<>(R.string.visibility_public, R.string.visibility_subtitle_public, R.drawable.ic_public_24px, StatusPrivacy.PUBLIC, onClick));
-		items.add(new ListItem<>(R.string.visibility_unlisted, R.string.visibility_subtitle_unlisted, R.drawable.ic_clear_night_24px, StatusPrivacy.UNLISTED, onClick));
-		items.add(new ListItem<>(R.string.visibility_followers_only, R.string.visibility_subtitle_followers, R.drawable.ic_lock_24px, StatusPrivacy.PRIVATE, onClick));
-		items.add(new ListItem<>(R.string.visibility_private, R.string.visibility_subtitle_private, R.drawable.ic_alternate_email_24px, StatusPrivacy.DIRECT, onClick));
-		menu.showAsDropDown(v);
+		if(instance.supportsQuotePostAuthoring()){
+			ComposerVisibilitySheet sheet=new ComposerVisibilitySheet(getActivity(), statusVisibility, statusQuotePolicy,
+					true, quotedStatus==null ? StatusPrivacy.PUBLIC : quotedStatus.visibility, accountID, (s, visibility, policy)->{
+				if(statusVisibility!=visibility || statusQuotePolicy!=policy){
+					statusVisibility=visibility;
+					statusQuotePolicy=policy;
+					updateVisibilityButton(true);
+				}
+				return true;
+			});
+			sheet.show();
+		}else{
+			ArrayList<ListItem<StatusPrivacy>> items=new ArrayList<>();
+			ExtendedPopupMenu menu=new ExtendedPopupMenu(getActivity(), items);
+			Consumer<ListItem<StatusPrivacy>> onClick=i->{
+				if(statusVisibility!=i.parentObject){
+					statusVisibility=i.parentObject;
+					updateVisibilityButton(true);
+				}
+				menu.dismiss();
+			};
+			items.add(new ListItem<>(R.string.visibility_public, R.string.visibility_subtitle_public, R.drawable.ic_public_24px, StatusPrivacy.PUBLIC, onClick));
+			items.add(new ListItem<>(R.string.visibility_unlisted, R.string.visibility_subtitle_unlisted, R.drawable.ic_clear_night_24px, StatusPrivacy.UNLISTED, onClick));
+			items.add(new ListItem<>(R.string.visibility_followers_only, R.string.visibility_subtitle_followers, R.drawable.ic_lock_24px, StatusPrivacy.PRIVATE, onClick));
+			items.add(new ListItem<>(R.string.visibility_private, R.string.visibility_subtitle_private, R.drawable.ic_alternate_email_24px, StatusPrivacy.DIRECT, onClick));
+			menu.showAsDropDown(v);
+		}
 	}
 
 	private void loadDefaultStatusVisibility(Bundle savedInstanceState){
@@ -1027,6 +1106,10 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 	}
 
 	private void applyPreferencesForPostVisibility(Preferences prefs, Bundle savedInstanceState){
+		if(quotedStatus!=null && quotedStatus.visibility==StatusPrivacy.UNLISTED){
+			statusVisibility=StatusPrivacy.UNLISTED;
+		}
+
 		// Only override the reply visibility if our preference is more private
 		if(prefs.postingDefaultVisibility.isLessVisibleThan(statusVisibility)){
 			statusVisibility=prefs.postingDefaultVisibility;
@@ -1037,10 +1120,13 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 			statusVisibility=(StatusPrivacy) savedInstanceState.getSerializable("visibility");
 		}
 
-		updateVisibilityIcon(false);
+		if(prefs.postingDefaultQuotePolicy!=null)
+			statusQuotePolicy=prefs.postingDefaultQuotePolicy;
+
+		updateVisibilityButton(false);
 	}
 
-	private void updateVisibilityIcon(boolean animated){
+	private void updateVisibilityButton(boolean animated){
 		if(getActivity()==null)
 			return;
 		if(statusVisibility==null){ // TODO find out why this happens
@@ -1061,12 +1147,29 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 			visibilityCurrentText.setVisibility(View.GONE);
 			visibilityCurrentText=visibilityText;
 		}
-		visibilityText.setText(switch(statusVisibility){
-			case PUBLIC -> R.string.visibility_public;
-			case UNLISTED -> R.string.visibility_unlisted;
-			case PRIVATE -> R.string.visibility_followers_only;
-			case DIRECT -> R.string.visibility_private;
-		});
+		if(instance.supportsQuotePostAuthoring()){
+			visibilityText.setText(switch(statusVisibility){
+				case PUBLIC -> switch(statusQuotePolicy){
+					case PUBLIC -> R.string.compose_visibility_public_anyone;
+					case FOLLOWERS -> R.string.compose_visibility_public_limited;
+					case NOBODY -> R.string.compose_visibility_public_disabled;
+				};
+				case UNLISTED -> switch(statusQuotePolicy){
+					case PUBLIC -> R.string.compose_visibility_unlisted_anyone;
+					case FOLLOWERS -> R.string.compose_visibility_unlisted_limited;
+					case NOBODY -> R.string.compose_visibility_unlisted_disabled;
+				};
+				case PRIVATE -> R.string.visibility_followers_only;
+				case DIRECT -> R.string.visibility_private;
+			});
+		}else{
+			visibilityText.setText(switch(statusVisibility){
+				case PUBLIC -> R.string.visibility_public;
+				case UNLISTED -> R.string.visibility_unlisted;
+				case PRIVATE -> R.string.visibility_followers_only;
+				case DIRECT -> R.string.visibility_private;
+			});
+		}
 		Drawable icon=getResources().getDrawable(switch(statusVisibility){
 			case PUBLIC -> R.drawable.ic_public_20px;
 			case UNLISTED -> R.drawable.ic_clear_night_20px;
@@ -1074,7 +1177,7 @@ public class ComposeFragment extends MastodonToolbarFragment implements ComposeE
 			case DIRECT -> R.drawable.ic_alternate_email_20px;
 		}, getActivity().getTheme()).mutate();
 		icon.setBounds(0, 0, V.dp(18), V.dp(18));
-		icon.setTint(UiUtils.getThemeColor(getActivity(), R.attr.colorM3Primary));
+		icon.setTint(UiUtils.getThemeColor(getActivity(), R.attr.colorM3OnSurfaceVariant));
 		visibilityText.setCompoundDrawablesRelative(icon, null, null, null);
 	}
 
