@@ -54,6 +54,8 @@ import me.grishka.appkit.utils.BindableViewHolder;
 import me.grishka.appkit.utils.V;
 import me.grishka.appkit.views.UsableRecyclerView;
 
+//TODO DANGER this file and the associated emojikeyboard is a cognitohazard
+
 public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 	private final Drawable placeholder;
 	private final boolean hideEmpty, forAnnouncement, playGifs;
@@ -403,6 +405,7 @@ public class EmojiReactionsStatusDisplayItem extends StatusDisplayItem {
 						args.putString("emoji", atSymbolIndex != -1 ? emojiReaction.name.substring(0, atSymbolIndex) : emojiReaction.name);
 						args.putString("url", emojiReaction.getUrl(parent.playGifs));
 						args.putInt("count", emojiReaction.count);
+						//TODO god what did that even do?
 						//Nav.go(parent.activity, StatusEmojiReactionsListFragment.class, args);
 						return true;
 					});
