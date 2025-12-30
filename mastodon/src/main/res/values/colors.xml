@@ -129,7 +129,6 @@
 
 	<!-- neonpink -->
 	<color name="md_theme_primary">#000000</color>
-	<color name="md_theme_onPrimary">#FFFFFF</color>
 	<color name="md_theme_primaryContainer">#321F36</color>
 	<color name="md_theme_onPrimaryContainer">#C5A8C6</color>
 	<color name="md_theme_secondary">#950084</color>

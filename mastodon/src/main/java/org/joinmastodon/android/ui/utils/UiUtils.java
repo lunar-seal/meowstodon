@@ -773,7 +773,7 @@ public class UiUtils{
 					case HIGH -> R.style.Theme_Mastodon_Dark_HighContrast;
 				};
 				case NEONPINK -> switch(getColorContrastMode(context)){
-					default -> R.style.Neonpink;
+					default -> R.style.Theme_Mastodon_Dark_Neonpink;
 					//case MEDIUM -> R.style.Theme_NEONPINK_MediumContrast;
 					//case HIGH -> R.style.Theme_HighContrast;
 				};
@@ -796,7 +796,7 @@ public class UiUtils{
 					case HIGH -> R.style.Theme_Mastodon_Dark_HighContrast_Masterial;
 				};
 				case NEONPINK -> switch(getColorContrastMode(context)){
-					default -> R.style.Neonpink;
+					default -> R.style.Theme_Mastodon_Dark_Neonpink;
 					//case MEDIUM -> R.style.Theme_NEONPINK_MediumContrast;
 					//case HIGH -> R.style.Theme_HighContrast;
 				};
@@ -807,7 +807,7 @@ public class UiUtils{
 	public static boolean isDarkTheme(){
 		if(GlobalUserPreferences.theme==GlobalUserPreferences.ThemePreference.AUTO)
 			return (MastodonApp.context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)==Configuration.UI_MODE_NIGHT_YES;
-		return GlobalUserPreferences.theme==GlobalUserPreferences.ThemePreference.DARK;
+		return GlobalUserPreferences.theme==GlobalUserPreferences.ThemePreference.DARK || GlobalUserPreferences.theme == GlobalUserPreferences.ThemePreference.NEONPINK;
 	}
 
 	public static void openURL(Context context, String accountID, String url, Object parentObject){
