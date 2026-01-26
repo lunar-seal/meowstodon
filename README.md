@@ -2,6 +2,8 @@
 
 I have no idea what I'm doing.
 
+actually nobody should use this, i just get new commits from origin and hope it works
+
 ## Goals
 - reaction support
 - neon pink theme
