@@ -59,6 +59,7 @@ import java.util.function.Consumer;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.ListUpdateCallback;
 import androidx.recyclerview.widget.RecyclerView;
 import me.grishka.appkit.Nav;
@@ -172,11 +173,17 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 						if(getActivity()==null)
 							return;
 						final ArrayList<StatusDisplayItem> prevDisplayItems;
+						final HashSet<String> prevRevealed=new HashSet<>();
 						if(refreshing){
 							prevDisplayItems=new ArrayList<>(displayItems);
+							for(StatusDisplayItem prev : prevDisplayItems)
+								if(prev instanceof SpoilerStatusDisplayItem ps && ps.status.revealedSpoilers.contains(ps.spoilerType))
+									prevRevealed.add(ps.parentID+"|"+ps.spoilerType);
 							data.clear();
 							displayItems.clear();
 							data.add(mainStatus);
+							// mainStatus persists across refreshes; clear so buildItems picks the unrevealed branch (indices match descendants/ancestors). Replay below re-reveals.
+							mainStatus.getContentStatus().revealedSpoilers.clear();
 							onAppendItems(Collections.singletonList(mainStatus));
 						}else if(result.asyncRefresh!=null){
 							prevDisplayItems=null;
@@ -202,6 +209,11 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 						dataLoaded();
 						if(refreshing){
 							refreshDone();
+							for(int i=0;i<displayItems.size();i++)
+								if(displayItems.get(i) instanceof SpoilerStatusDisplayItem s
+										&& prevRevealed.contains(s.parentID+"|"+s.spoilerType)
+										&& s.status.revealedSpoilers.add(s.spoilerType))
+									displayItems.addAll(i+1, s.contentItems);
 							DiffUtil.DiffResult diff=DiffUtil.calculateDiff(new DiffUtil.Callback(){
 								@Override
 								public int getOldListSize(){
@@ -245,6 +257,20 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 								public void onChanged(int position, int count, @Nullable Object payload){}
 							});
 							diff.dispatchUpdatesTo(adapter);
+							// Rebind visible spoiler/text holders so click callbacks see fresh items;
+							// stale callbacks would insert at list top.
+							LinearLayoutManager lm=(LinearLayoutManager) list.getLayoutManager();
+							for(int pos=lm.findFirstVisibleItemPosition();pos<=lm.findLastVisibleItemPosition();pos++){
+								if(pos<0 || pos>=displayItems.size()) continue;
+								StatusDisplayItem fresh=displayItems.get(pos);
+								if(!(fresh instanceof SpoilerStatusDisplayItem) && !(fresh instanceof TextStatusDisplayItem)) continue;
+								RecyclerView.ViewHolder vh=list.findViewHolderForAdapterPosition(pos);
+								if(vh instanceof StatusDisplayItem.Holder){
+									@SuppressWarnings({"unchecked","rawtypes"})
+									StatusDisplayItem.Holder raw=(StatusDisplayItem.Holder) vh;
+									raw.bind(fresh);
+								}
+							}
 							if(!newReplyIDs.isEmpty()){
 								if(highlightAlphaAnimator!=null)
 									highlightAlphaAnimator.cancel();

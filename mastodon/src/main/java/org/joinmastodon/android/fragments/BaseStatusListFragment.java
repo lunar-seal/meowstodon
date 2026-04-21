@@ -651,7 +651,18 @@ public abstract class BaseStatusListFragment<T extends DisplayItemsParent> exten
 	}
 
 	private void toggleSpoiler(Status status, SpoilerStatusDisplayItem spoilerItem){
-		int index=displayItems.indexOf(spoilerItem);
+		int index=-1;
+		for(int i=0;i<displayItems.size();i++){
+			if(displayItems.get(i) instanceof SpoilerStatusDisplayItem s
+					&& s.parentID.equals(spoilerItem.parentID)
+					&& s.spoilerType==spoilerItem.spoilerType){
+				index=i;
+				spoilerItem=s;
+				break;
+			}
+		}
+		if(index<0)
+			return;
 		if(status.revealedSpoilers.contains(spoilerItem.spoilerType)){
 			int itemCount=spoilerItem.contentItems.size();
 			displayItems.addAll(index+1, spoilerItem.contentItems);
