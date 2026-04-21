@@ -97,6 +97,7 @@ public abstract class StatusDisplayItem{
 			case FOLLOW_REQUEST_ACTIONS -> new FollowRequestActionsDisplayItem.Holder(activity, parent);
 			case QUOTE_ERROR -> new QuoteErrorStatusDisplayItem.Holder(activity, parent);
 			case NESTED_QUOTE -> new NestedQuoteStatusDisplayItem.Holder(activity, parent);
+			case UNKNOWN_ATTACHMENT -> new UnknownAttachmentStatusDisplayItem.Holder(activity, parent);
 		};
 	}
 
@@ -185,6 +186,11 @@ public abstract class StatusDisplayItem{
 		for(Attachment att:statusForContent.mediaAttachments){
 			if(att.type==Attachment.Type.AUDIO){
 				contentItems.add(new AudioStatusDisplayItem(parentID, callbacks, context, statusForContent, att));
+			}
+		}
+		for(Attachment att:statusForContent.mediaAttachments){
+			if(att.type==Attachment.Type.UNKNOWN){
+				contentItems.add(new UnknownAttachmentStatusDisplayItem(parentID, callbacks, context, att, accountID, statusForContent));
 			}
 		}
 		if(statusForContent.poll!=null){
@@ -282,7 +288,8 @@ public abstract class StatusDisplayItem{
 		HEADER_COMPACT,
 		QUOTE_ERROR,
 		NESTED_QUOTE,
-		EMOJI_REACTIONS
+		EMOJI_REACTIONS,
+		UNKNOWN_ATTACHMENT
 	}
 
 	public static abstract class Holder<T> extends BindableViewHolder<T> implements UsableRecyclerView.DisableableClickable{
