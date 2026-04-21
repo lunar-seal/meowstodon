@@ -153,8 +153,11 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 					footer.hideCounts=true;
 				else if(item instanceof SpoilerStatusDisplayItem spoiler){
 					for(StatusDisplayItem subItem:spoiler.contentItems){
-						if(subItem instanceof TextStatusDisplayItem text)
+						subItem.fullWidth=true;
+						if(subItem instanceof TextStatusDisplayItem text){
 							text.textSelectable=!subItem.isQuote;
+							text.largerFont=true;
+						}
 					}
 				}
 			}
