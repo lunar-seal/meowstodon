@@ -185,7 +185,7 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 							data.clear();
 							displayItems.clear();
 							data.add(mainStatus);
-							// mainStatus persists across refreshes; clear so buildItems picks the unrevealed branch (indices match descendants/ancestors). Replay below re-reveals.
+							// clear revealed spoilers to replay later
 							mainStatus.getContentStatus().revealedSpoilers.clear();
 							onAppendItems(Collections.singletonList(mainStatus));
 						}else if(result.asyncRefresh!=null){
@@ -261,7 +261,7 @@ public class ThreadFragment extends StatusListFragment implements AssistContentP
 							});
 							diff.dispatchUpdatesTo(adapter);
 							// Rebind visible spoiler/text holders so click callbacks see fresh items;
-							// stale callbacks would insert at list top.
+							// stale callbacks would insert at top
 							LinearLayoutManager lm=(LinearLayoutManager) list.getLayoutManager();
 							for(int pos=lm.findFirstVisibleItemPosition();pos<=lm.findLastVisibleItemPosition();pos++){
 								if(pos<0 || pos>=displayItems.size()) continue;
