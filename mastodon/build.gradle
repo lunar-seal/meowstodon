@@ -13,8 +13,8 @@ android {
 		applicationId "eu.ff15.meowstodon.android"
 		minSdk 23
 		targetSdk 35
-		versionCode 167
-		versionName "2.12.3+meow.1"
+		versionCode 168
+		versionName "2.12.3+meow.2"
 		testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 		testBuildType "screenshotsUiTest"
 	}
