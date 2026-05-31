@@ -21,16 +21,8 @@
 	<string name="discard_draft">Bỏ bản nháp?</string>
 	<string name="discard">Bỏ đi</string>
 	<string name="cancel">Hủy bỏ</string>
-	<plurals name="followers">
-		<item quantity="other">người theo dõi</item>
-	</plurals>
-	<plurals name="following">
-		<item quantity="other">theo dõi</item>
-	</plurals>
 	<string name="posts">Tút</string>
-	<string name="posts_and_replies">Trả lời</string>
 	<string name="media">Phương tiện</string>
-	<string name="profile_about">Giới thiệu</string>
 	<string name="button_follow">Theo dõi</string>
 	<string name="button_following">Đang theo dõi</string>
 	<string name="edit_profile">Sửa hồ sơ</string>
@@ -225,7 +217,6 @@
 	<string name="see_new_posts">Những tút mới</string>
 	<string name="follow_back">Theo dõi lại</string>
 	<string name="button_follow_pending">Đang chờ</string>
-	<string name="follows_you">Đang theo dõi bạn</string>
 	<string name="manually_approves_followers">Duyệt người theo dõi thủ công</string>
 	<!-- translators: %,d is a valid placeholder, it formats the number with locale-dependent grouping separators -->
 	<plurals name="x_followers">
@@ -302,7 +293,6 @@
 	<string name="not_accepting_new_members">Tạm dừng đăng ký mới</string>
 	<string name="category_special_interests">Sở thích đặc biệt</string>
 	<string name="signup_passwords_dont_match">Mật khẩu không khớp</string>
-	<string name="profile_add_row">Thêm hàng</string>
 	<string name="profile_setup">Thiết lập hồ sơ</string>
 	<string name="profile_setup_subtitle">Bạn có thể sửa sau trong mục Hồ sơ.</string>
 	<string name="follow_all">Theo dõi tất cả</string>
@@ -567,7 +557,6 @@
 	<string name="no_followed_hashtags_subtitle">Chúng sẽ xuất hiện ở đây</string>
 	<string name="no_lists_title">Sắp xếp bảng tin bằng Danh sách</string>
 	<string name="no_lists_subtitle">Danh sách sẽ xuất hiện ở đây</string>
-	<string name="manage_accounts">Thêm hoặc đổi tài khoản</string>
 	<plurals name="x_posts_recently">
 		<item quantity="other">%,d tút mới</item>
 	</plurals>
@@ -636,20 +625,6 @@ Bạn càng theo dõi nhiều người thì nó sẽ càng sôi động và thú
 	<string name="server_cant_mention_or_follow_you">Không ai trên máy chủ này có thể theo dõi bạn.</string>
 	<string name="server_can_interact_with_older">Thành viên máy chủ này có thể tương tác với các tút cũ của bạn.</string>
 	<string name="unblocked_domain_x">Bỏ chặn máy chủ %s</string>
-	<string name="handle_help_title">Địa chỉ Mastodon là gì?</string>
-	<string name="handle_title">Địa chỉ Mastodon của người này</string>
-	<string name="handle_username_explanation">Độc nhất trên máy chủ này. Những máy chủ khác có thể cũng có tên người dùng giống vậy.</string>
-	<string name="handle_title_own">Địa chỉ Mastodon của bạn</string>
-	<string name="handle_username_explanation_own">Chỉ riêng bạn trên máy chủ này. Những máy chủ khác có thể cũng có tên người dùng giống vậy.</string>
-	<string name="server">Máy chủ</string>
-	<string name="handle_server_explanation">Nơi lưu trữ tút của người này.</string>
-	<string name="handle_explanation">Vì địa chỉ Mastodon cho biết một người là ai và họ ở đâu, nên bạn có thể tương tác với mọi người trên các nền tảng có &lt;a&gt;hỗ trợ ActivityPub&lt;/a&gt;.</string>
-	<string name="handle_server_explanation_own">Nơi lưu trữ tút của bạn. Không thích ở đây? Chuyển sang máy chủ khác và giữ nguyên người theo dõi của bạn.</string>
-	<string name="handle_explanation_own">Vì địa chỉ Mastodon cho biết bạn là ai và bạn ở đâu, nên bạn có thể tương tác với mọi người trên các nền tảng có &lt;a&gt;hỗ trợ ActivityPub&lt;/a&gt;.</string>
-	<string name="what_is_activitypub_title">ActivityPub là gì?</string>
-	<string name="what_is_activitypub">ActivityPub giống như ngôn ngữ Mastodon giao tiếp với các mạng xã hội khác.\n\nNó giúp bạn kết nối và tương tác với mọi người, không chỉ trên Mastodon mà còn trên các nền tảng khác.</string>
-	<string name="handle_copied">Đã sao chép địa chỉ Mastodon.</string>
-	<string name="qr_code">Mã QR</string>
 	<string name="scan_qr_code">Quét mã QR</string>
 	<!-- Shown on a button that saves a file, after it was successfully saved -->
 	<string name="saved">Đã lưu</string>
@@ -658,7 +633,6 @@ Bạn càng theo dõi nhiều người thì nó sẽ càng sôi động và thú
 	<string name="view_file">Xem</string>
 	<string name="share_sheet_preview_profile">%s trên Mastodon</string>
 	<string name="share_sheet_preview_post">%1$s trên Mastodon: “%2$s”</string>
-	<string name="copy_profile_link">Sao chép địa chỉ Mastodon</string>
 	<string name="in_app_browser">Trình duyệt tích hợp</string>
 	<string name="system_browser">Trình duyệt hệ thống</string>
 	<string name="add_muted_word_short">Thêm từ</string>
@@ -778,7 +752,6 @@ Bạn càng theo dõi nhiều người thì nó sẽ càng sôi động và thú
 	</plurals>
 	<string name="familiar_followers_one">Theo dõi bởi %s</string>
 	<string name="familiar_followers_two">Theo dõi bởi %s và %s</string>
-	<string name="profile_saved_posts">Đã lưu</string>
 	<string name="profile_saved_posts_explanation">Những tút bạn lưu chỉ hiển thị với bạn.</string>
 	<string name="search_people">Người</string>
 	<plurals name="familiar_followers_many">
@@ -873,4 +846,98 @@ Bạn càng theo dõi nhiều người thì nó sẽ càng sôi động và thú
 	<string name="quote_followers_only_cancel">Quay lại chỉnh sửa</string>
 	<string name="quote_followers_only_dont_show_again">Không hiện thông báo này nữa</string>
 	<string name="more_replies_found">Có trả lời mới</string>
+	<string name="user_is_muted">Đã phớt lờ</string>
+	<string name="user_is_bot">Tài khoản tự động</string>
+	<string name="profile_view_qr_code">Xem mã QR</string>
+	<string name="feature_user">Nêu bật trên hồ sơ</string>
+	<string name="add_user_personal_note">Thêm ghi chú</string>
+	<string name="mute_account">Phớt lờ tài khoản</string>
+	<string name="block_account">Chặn tài khoản</string>
+	<string name="remove_follower">Xóa người theo dõi</string>
+	<string name="report_account">Báo cáo tài khoản</string>
+	<string name="unblock_account">Bỏ chặn tài khoản</string>
+	<string name="unmute_account">Bỏ phớt lờ tài khoản</string>
+	<string name="unblock">Bỏ chặn</string>
+	<string name="request_to_follow">Yêu cầu theo dõi</string>
+	<string name="cancel_follow_request">Hủy yêu cầu</string>
+	<string name="confirm_remove_follower_title">Xóa người theo dõi?</string>
+	<string name="confirm_remove_follower">%s sẽ không còn theo dõi bạn. Bạn có chắc tiếp tục?</string>
+	<string name="edit_user_personal_note">Sửa ghi chú</string>
+	<string name="user_personal_note_explanation">Ghi chú chỉ hiển thị với bạn.</string>
+	<string name="user_personal_note">Ghi chú</string>
+	<string name="timeline_filter_posts_and_boosts">Tút và lượt đăng lại</string>
+	<string name="timeline_filter_show_replies">Hiện những lượt trả lời</string>
+	<string name="timeline_filter_show_boosts">Hiện những lượt đăng lại</string>
+	<string name="timeline_filter_all_activity">Tất cả hoạt động</string>
+	<string name="timeline_filter_posts_and_replies">Tút và lượt trả lời</string>
+	<string name="timeline_filter_posts">Tút</string>
+	<string name="edit_profile_display_name">Tên gọi</string>
+	<string name="edit_profile_x_custom_fields">Trường tùy chỉnh (%d)</string>
+	<string name="edit_profile_custom_fields">Trường tùy chỉnh</string>
+	<string name="edit_profile_custom_fields_description">Vd: sở thích, liên kết ngoài</string>
+	<string name="edit_profile_featured_hashtags_description">Cho phép mọi người lọc dòng thời gian của bạn theo chủ đề</string>
+	<string name="edit_profile_tab_settings">Thiết lập tab hồ sơ</string>
+	<string name="edit_profile_add_bio">Thêm giới thiệu</string>
+	<string name="edit_profile_featured_hashtags">Hashtag thường dùng</string>
+	<string name="edit_profile_x_featured_hashtags">Hashtag thường dùng (%d)</string>
+	<string name="edit_profile_replace_image">Thay thế</string>
+	<string name="edit_profile_edit_display_name">Sửa tên gọi</string>
+	<string name="edit_profile_edit_bio">Sửa giới thiệu</string>
+	<string name="add_profile_field">Thêm trường</string>
+	<string name="edit_profile_custom_fields_help">Mẹo: Xác minh liên kết đến bất kỳ trang web nào bạn sở hữu. <i>Tìm hiểu thêm</i></string>
+	<string name="edit_profile_link_verification_help_title">Thêm liên kết xác minh</string>
+	<string name="edit_profile_link_verification_help">Tăng độ tin cậy cho hồ sơ Mastodon của bạn bằng cách xác minh liên kết đến trang web cá nhân. Cách thức thực hiện như sau:</string>
+	<string name="edit_profile_link_verification_title1">Sao chép mã HTML bên dưới</string>
+	<string name="edit_profile_link_verification_title2">Dán đoạn mã này vào phần tiêu đề HTML của trang web của bạn</string>
+	<string name="edit_profile_link_verification_text2">Thêm đoạn mã vào phần tiêu đề cho phép phần tử &lt;a&gt; vẫn ẩn. Thuộc tính rel=\"me\" ngăn chặn việc mạo danh trên các trang web có nội dung do người dùng tạo ra – vì vậy điều quan trọng là phải giữ lại thuộc tính này.</string>
+	<string name="edit_profile_link_verification_title3">Thêm trang web của bạn dưới dạng trường tùy chỉnh</string>
+	<string name="edit_profile_link_verification_text3">Nếu bạn từng đặt trang web của mình dưới dạng trường tùy chỉnh, bạn cần xóa và thêm lại trang web đó để kích hoạt quá trình xác minh.</string>
+	<string name="edit_profile_field">Sửa trường</string>
+	<string name="edit_profile_field_label_example">Vd: ‘Website cá nhân’</string>
+	<string name="edit_profile_field_value_example">Vd: ‘example.me‘</string>
+	<plurals name="x_chars_max">
+		<item quantity="other">%,d ký tự tối đa</item>
+	</plurals>
+	<plurals name="hashtag_used_in_x_posts">
+		<item quantity="other">Đã dùng trong %,d tút</item>
+	</plurals>
+	<string name="add_featured_hashtag">Thêm hashtag</string>
+	<string name="hashtag">Hashtag</string>
+	<string name="confirm_remove_featured_hashtag">Xóa hashtag?</string>
+	<string name="edit_profile_show_media_tab">Tab \'Phương tiện\'</string>
+	<string name="edit_profile_show_media_tab_description">Hiện những tút chứa phương tiện</string>
+	<string name="edit_profile_show_media_replies">Bao gồm lượt trả lời</string>
+	<string name="edit_profile_show_featured_tab">Tab \'Nêu bật\'</string>
+	<string name="edit_profile_show_featured_tab_description">Không gian để hiển thị những tài khoản khác</string>
+	<!-- %s is the current user's server domain -->
+	<string name="edit_profile_tabs_explanation">Những thiết lập này tùy chỉnh những gì người dùng thấy trên %s trong ứng dụng chính thức, nhưng có thể sẽ không thấy trên các máy chủ khác hoặc các ứng dụng thứ ba.</string>
+	<string name="handle_explanation_title">Một địa chỉ giống như địa chỉ email.</string>
+	<string name="handle_explanation_username">%s là tên người dùng duy nhất trên máy chủ này. Các máy chủ khác có thể cũng có tên người dùng giống vậy.</string>
+	<string name="handle_explanation_domain">%s là máy chủ lưu trữ hồ sơ và tút của tài khoản.</string>
+	<string name="handle_explanation_summary">Giống như việc bạn có thể gửi email cho những người sử dụng các nhà cung cấp email khác nhau, bạn cũng có thể tương tác với những người trên các máy chủ Mastodon khác và với bất kỳ ai trên các ứng dụng Fediverse khác.</string>
+	<string name="pinned_post">Đã ghim</string>
+	<string name="view_all_pinned">Xem toàn bộ tút đã ghim</string>
+	<string name="profile_show_all_fields">Hiện tất cả các trường</string>
+	<string name="unfeature_user">Bỏ nêu bật tài khoản này</string>
+	<string name="confirm_delete_profile_field">Xóa trường?</string>
+	<string name="confirm_delete_avatar">Xóa ảnh đại diện?</string>
+	<string name="confirm_delete_cover">Xóa ảnh bìa?</string>
+	<string name="profile_followers">Người theo dõi</string>
+	<string name="profile_following">Đang theo dõi</string>
+	<string name="user_follows_you">Theo dõi bạn</string>
+	<string name="profile_featured_empty_self">Hãy đón chờ Gói khởi đầu</string>
+	<string name="profile_featured_empty">Không có gì để xem ở đây</string>
+	<string name="profile_featured_empty_description">%s chưa nêu bật gì.</string>
+	<string name="profile_featured_empty_self_description">Gói khởi đầu (sẽ có trong Mastodon 4.6) cho phép bạn tạo danh sách các tài khoản được tuyển chọn để giới thiệu cho người khác.</string>
+	<string name="handle_explanation_copy">Sao chép địa chỉ</string>
+	<string name="request_to_follow_short">Yêu cầu</string>
+	<string name="cancel_follow_request_short">Hủy bỏ</string>
+	<string name="notification_filter_admin">Thông báo quản trị viên</string>
+	<string name="notification_filter_admin_reports">Báo cáo quản trị</string>
+	<string name="notification_filter_admin_signups">Đăng ký tài khoản</string>
+	<string name="notification_filter_admin_reports_explanation">Hiện báo cáo spam, vi phạm nội quy máy chủ và khác nữa</string>
+	<string name="notification_filter_admin_signups_explanation">Hiện thông báo về người mới tham gia máy chủ</string>
+	<!-- Placeholders are user display names -->
+	<string name="notification_admin_report">%1$s báo cáo %2$s</string>
+	<string name="notification_admin_signup">%s đã đăng ký</string>
 </resources>

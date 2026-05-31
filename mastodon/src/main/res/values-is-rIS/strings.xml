@@ -21,18 +21,8 @@
 	<string name="discard_draft">Henda drögum?</string>
 	<string name="discard">Henda</string>
 	<string name="cancel">Hætta við</string>
-	<plurals name="followers">
-		<item quantity="one">fylgjandi</item>
-		<item quantity="other">fylgjendur</item>
-	</plurals>
-	<plurals name="following">
-		<item quantity="one">fylgist með</item>
-		<item quantity="other">fylgjast með</item>
-	</plurals>
 	<string name="posts">Færslur</string>
-	<string name="posts_and_replies">Færslur og svör</string>
 	<string name="media">Gagnamiðlar</string>
-	<string name="profile_about">Um hugbúnaðinn</string>
 	<string name="button_follow">Fylgja</string>
 	<string name="button_following">Fylgist með</string>
 	<string name="edit_profile">Breyta notandasniði</string>
@@ -238,7 +228,6 @@
 	<string name="see_new_posts">Nýjar færslur</string>
 	<string name="follow_back">Fylgjast með til baka</string>
 	<string name="button_follow_pending">Í bið</string>
-	<string name="follows_you">Fylgist með þér</string>
 	<string name="manually_approves_followers">Samþykkir fylgjendur handvirkt</string>
 	<!-- translators: %,d is a valid placeholder, it formats the number with locale-dependent grouping separators -->
 	<plurals name="x_followers">
@@ -321,7 +310,6 @@
 	<string name="not_accepting_new_members">Tekur ekki við nýjum meðlimum</string>
 	<string name="category_special_interests">Sérstök áhugamál</string>
 	<string name="signup_passwords_dont_match">Lykilorðin samsvara ekki</string>
-	<string name="profile_add_row">Bæta við röð</string>
 	<string name="profile_setup">Uppsetning notandasniðs</string>
 	<string name="profile_setup_subtitle">Þú getur alltaf klárað þetta síðar á notendasniðaflipanum.</string>
 	<string name="follow_all">Fylgjast með öllum</string>
@@ -598,7 +586,6 @@
 	<string name="no_followed_hashtags_subtitle">Þeir sem fylgst er með birtast hér</string>
 	<string name="no_lists_title">Skipulegðu heimastreymið þitt með listum</string>
 	<string name="no_lists_subtitle">Þú munt birtast hér</string>
-	<string name="manage_accounts">Bæta við eða skipta um aðganga</string>
 	<plurals name="x_posts_recently">
 		<item quantity="one">%,d nýleg færsla</item>
 		<item quantity="other">%,d nýlegar færslur</item>
@@ -669,20 +656,6 @@
 	<string name="server_cant_mention_or_follow_you">Enginn frá þessum netþjóni getur fylgst með þér.</string>
 	<string name="server_can_interact_with_older">Fólk frá þessum netþjóni getur sýslað með eldri færslur þínar.</string>
 	<string name="unblocked_domain_x">Aflétti útilokun af léninu %s</string>
-	<string name="handle_help_title">Hvað er í kennislóð (handle)?</string>
-	<string name="handle_title">Kennislóðin þeirra</string>
-	<string name="handle_username_explanation">Sértækt auðkenni viðkomandi á netþjóni hans. Það er mögulegt að finna notendur með sama notandanafn á mismunandi netþjónum.</string>
-	<string name="handle_title_own">Kennislóðin þín</string>
-	<string name="handle_username_explanation_own">Sértækt auðkenni þitt á þessum netþjóni. Það er mögulegt að finna notendur með sama notandanafn á mismunandi netþjónum.</string>
-	<string name="server">Netþjónn</string>
-	<string name="handle_server_explanation">Stafrænt heimili viðkomandi, þar sem allar færslur hans eru hýstar.</string>
-	<string name="handle_explanation">Vegna þess að kennislóðir segja hver einhver sé og hvar hann sé að finna, getur þú átt í samskiptum við fólk í gegnum samfélagsvef sem knúinn er af &lt;a&gt;ActivityPub-samhæfðum kerfum&lt;/a&gt;.</string>
-	<string name="handle_server_explanation_own">Stafrænt heimili þitt, þar sem allar færslur þínar eru hýstar. Kanntu ekki við þennan netþjón? Þú getur flutt þig á milli netþjóna hvenær sem er og tekið með þér alla fylgjendurna þína.</string>
-	<string name="handle_explanation_own">Vegna þess að kennislóðin þín segir hver þú sért og hvar þig sé að finna, getur fólk átt í samskiptum við þig í gegnum samfélagsvef sem knúinn er af &lt;a&gt;ActivityPub-samhæfðum kerfum&lt;/a&gt;.</string>
-	<string name="what_is_activitypub_title">Hvað er ActivityPub?</string>
-	<string name="what_is_activitypub">ActivityPub má líkja við að vera tungumálið sem Mastodon notar til að tala við önnur samfélagsnet.\n\nÞað gerir þér kleift að tengjast og eiga í samskiptum við annað fólk, ekki bara á Mastodon, heldur einnig í mörgum öðrum samfélagsmiðlaforritum.</string>
-	<string name="handle_copied">Kennislóð afrituð á klippispjald.</string>
-	<string name="qr_code">QR-kóði</string>
 	<string name="scan_qr_code">Skanna QR-kóða</string>
 	<!-- Shown on a button that saves a file, after it was successfully saved -->
 	<string name="saved">Vistað</string>
@@ -691,7 +664,6 @@
 	<string name="view_file">Skoða</string>
 	<string name="share_sheet_preview_profile">%s á Mastodon</string>
 	<string name="share_sheet_preview_post">%1$s á Mastodon: “%2$s”</string>
-	<string name="copy_profile_link">Afrita tengil í notandasnið</string>
 	<string name="in_app_browser">Skoðari forrits</string>
 	<string name="system_browser">Skoðari kerfis</string>
 	<string name="add_muted_word_short">Bæta við orði</string>
@@ -819,7 +791,6 @@
 	</plurals>
 	<string name="familiar_followers_one">Fylgt af %s</string>
 	<string name="familiar_followers_two">Fylgt af %s og %s</string>
-	<string name="profile_saved_posts">Vistað</string>
 	<string name="profile_saved_posts_explanation">Vistaðar færslur þínar eru einungis sýnilegar þér.</string>
 	<string name="search_people">Fólk</string>
 	<plurals name="familiar_followers_many">
@@ -921,4 +892,92 @@
 	<string name="quote_followers_only_cancel">Til baka í breytingar</string>
 	<string name="quote_followers_only_dont_show_again">Ekki birta þessi skilaboð aftur</string>
 	<string name="more_replies_found">Fleiri svör fundust</string>
+	<string name="user_is_muted">Þaggað</string>
+	<string name="user_is_bot">Sjálfvirkur aðgangur</string>
+	<string name="profile_view_qr_code">Skoða QR-kóða</string>
+	<string name="feature_user">Gefa aukið vægi á notandasniðinu mínu</string>
+	<string name="add_user_personal_note">Bæta við persónulegum minnispunkti</string>
+	<string name="mute_account">Þagga niður í aðgangi</string>
+	<string name="block_account">Útiloka notandaaðgang</string>
+	<string name="remove_follower">Fjarlægja fylgjanda</string>
+	<string name="report_account">Kæra aðgang</string>
+	<string name="unblock_account">Aflétta útilokun aðgangs</string>
+	<string name="unmute_account">Hætta að þagga niður í aðgangi</string>
+	<string name="unblock">Aflétta útilokun</string>
+	<string name="request_to_follow">Beiðni um að fylgja</string>
+	<string name="cancel_follow_request">Hætta við beiðni</string>
+	<string name="confirm_remove_follower_title">Fjarlægja fylgjanda?</string>
+	<string name="confirm_remove_follower">%s mun hætta að fylgjast með þér. Ertu viss um að þú viljir halda áfram?</string>
+	<string name="edit_user_personal_note">Breyta persónulegum minnispunkti</string>
+	<string name="user_personal_note_explanation">Persónulegir einkaminnispunktar eru einungis sýnilegir þér.</string>
+	<string name="user_personal_note">Einkaminnispunktur</string>
+	<string name="timeline_filter_posts_and_boosts">Færslur og endurbirtingar</string>
+	<string name="timeline_filter_show_replies">Birta svör</string>
+	<string name="timeline_filter_show_boosts">Sýna endurbirtingar</string>
+	<string name="timeline_filter_all_activity">Öll virkni</string>
+	<string name="timeline_filter_posts_and_replies">Færslur og svör</string>
+	<string name="timeline_filter_posts">Færslur</string>
+	<string name="edit_profile_display_name">Birtingarnafn</string>
+	<string name="edit_profile_x_custom_fields">Sérsniðnir reitir (%d)</string>
+	<string name="edit_profile_custom_fields">Sérsniðnir reitir</string>
+	<string name="edit_profile_custom_fields_description">T.d. fornöfn, ytri tenglar, o.s.frv.</string>
+	<string name="edit_profile_featured_hashtags_description">Leyfa notendum að sía tímalínuna þína eftir hugtökum</string>
+	<string name="edit_profile_tab_settings">Stillingar notandasniðsflipa</string>
+	<string name="edit_profile_add_bio">Bæta við æviágripi</string>
+	<string name="edit_profile_featured_hashtags">Myllumerki með aukið vægi</string>
+	<string name="edit_profile_x_featured_hashtags">Myllumerki með aukið vægi (%d)</string>
+	<string name="edit_profile_replace_image">Skipta út</string>
+	<string name="edit_profile_edit_display_name">Breyta birtingarnafni</string>
+	<string name="edit_profile_edit_bio">Breyta æviágripi</string>
+	<string name="add_profile_field">Bæta við reit</string>
+	<string name="edit_profile_custom_fields_help">Ábending: Auktu trúverðugleika Mastodon-aðgangsins þíns með því að bæta við staðfestingartenglum sem vísa á vefsvæði sem þú átt. <i>Sjá nánar</i></string>
+	<string name="edit_profile_link_verification_help_title">Bæta við staðfestingartengli</string>
+	<string name="edit_profile_link_verification_help">Auktu trúverðugleika Mastodon-aðgangsins þíns með því að bæta við staðfestingartenglum sem vísa á vefsvæðin þín. Hérna sérðu hvernig það virkar:</string>
+	<string name="edit_profile_link_verification_title1">Afritaðu HTML-kóðann hér fyrir neðan</string>
+	<string name="edit_profile_link_verification_title2">Límdu kóðann inn í HTML-haus vefsvæðisins þíns</string>
+	<string name="edit_profile_link_verification_text2">Sé kóðanum bætt inn í haus vefsíðu þá helst &lt;a&gt; einindið ósýnilegt. Eigindið rel=\"me\" kemur í veg fyrir að aðrir geti falsað upprunann á vefsvæðum með notendaframleiddu efni – þannig að það er mjög mikilvægt að láta þetta fylgja.</string>
+	<string name="edit_profile_link_verification_title3">Bættu vefsvæðinu þínu inn sem sérsniðnum reit</string>
+	<string name="edit_profile_link_verification_text3">Ef þú hefur þegar bættu vefsvæðinu þínu inn sem sérsniðnum reit, þá muntu þurfa að eyða honum og bæta við aftur til að gangsetja sannvottun.</string>
+	<string name="edit_profile_field">Breyta reit</string>
+	<string name="edit_profile_field_label_example">T.d. \'Eigið vefsvæði\'</string>
+	<string name="edit_profile_field_value_example">T.d. \"minnvefur.is\"</string>
+	<plurals name="x_chars_max">
+		<item quantity="one">%,d stafur að hámarki</item>
+		<item quantity="other">%,d stafir að hámarki</item>
+	</plurals>
+	<plurals name="hashtag_used_in_x_posts">
+		<item quantity="one">Notað í %,d færslu</item>
+		<item quantity="other">Notað í %,d færslum</item>
+	</plurals>
+	<string name="add_featured_hashtag">Bæta við myllumerki</string>
+	<string name="hashtag">Myllumerki</string>
+	<string name="confirm_remove_featured_hashtag">Fjarlægja myllumerki?</string>
+	<string name="edit_profile_show_media_tab">‘Myndefni\' flipi</string>
+	<string name="edit_profile_show_media_tab_description">Sýnir þær færslur þínar sem innihalda myndir eða myndskeið</string>
+	<string name="edit_profile_show_media_replies">Hafa með svör</string>
+	<string name="edit_profile_show_featured_tab">‘Með aukið vægi\' flipi</string>
+	<string name="edit_profile_show_featured_tab_description">Svæði þar sem þú getur kynnt aðra notendaaðganga</string>
+	<!-- %s is the current user's server domain -->
+	<string name="edit_profile_tabs_explanation">Þessar stillingar sérsníða hvað notendur sjá á %s í opinberu forritunum, en ekki er víst hvernig þetta virkar fyrir notendur á öðrum netþjónum og utanaðkomandi forritum.</string>
+	<string name="handle_explanation_title">Kennislóð (handle) líkist tölvupóstfangi.</string>
+	<string name="handle_explanation_username">%s er notandanafn þessa aðgangs á netþjóni viðkomandi. Einhver annar á öðrum netþjóni getur verið með sama notandanafnið.</string>
+	<string name="handle_explanation_domain">%s er netþjónninn sem hýsir notandasnið og færslur viðkomandi.</string>
+	<string name="pinned_post">Fest</string>
+	<string name="view_all_pinned">Skoða allar festar færslur</string>
+	<string name="profile_show_all_fields">Birta alla reiti</string>
+	<string name="unfeature_user">Ekki birta með aukið vægi á notandasniðinu mínu</string>
+	<string name="confirm_delete_profile_field">Eyða reit?</string>
+	<string name="confirm_delete_avatar">Fjarlægja auðkennismynd?</string>
+	<string name="confirm_delete_cover">Fjarlægja bakgrunnsmynd?</string>
+	<string name="profile_followers">Fylgjendur</string>
+	<string name="profile_following">Fylgjast með</string>
+	<string name="user_follows_you">Fylgist með þér</string>
+	<string name="profile_featured_empty_self">Kynntu þér hvað séu söfn</string>
+	<string name="profile_featured_empty">Ekkert að sjá hér</string>
+	<string name="profile_featured_empty_description">%s hefur enn ekki gefið neinu aukið vægi.</string>
+	<string name="profile_featured_empty_self_description">Söfn (sem koma fram í Mastodon 4.6) gera þér kleift að búa til þina eigin ritstýrðu lista yfir þá aðganga sem þú vilt mæla með við aðra.</string>
+	<string name="handle_explanation_copy">Afrita kennislóð</string>
+	<string name="request_to_follow_short">Beiðni</string>
+	<string name="cancel_follow_request_short">Hætta við</string>
+	<!-- Placeholders are user display names -->
 </resources>

@@ -21,22 +21,8 @@
 	<string name="discard_draft">An tilg thu air falbh an dreachd?</string>
 	<string name="discard">Tilg air falbh</string>
 	<string name="cancel">Sguir dheth</string>
-	<plurals name="followers">
-		<item quantity="one">neach-leantainn</item>
-		<item quantity="two">luchd-leantainn</item>
-		<item quantity="few">luchd-leantainn</item>
-		<item quantity="other">luchd-leantainn</item>
-	</plurals>
-	<plurals name="following">
-		<item quantity="one">’ga leantainn</item>
-		<item quantity="two">’ga leantainn</item>
-		<item quantity="few">’ga leantainn</item>
-		<item quantity="other">’ga leantainn</item>
-	</plurals>
 	<string name="posts">Postaichean</string>
-	<string name="posts_and_replies">Postaichean ’s freagairtean</string>
 	<string name="media">Meadhanan</string>
-	<string name="profile_about">Mu dhèidhinn</string>
 	<string name="button_follow">Lean</string>
 	<string name="button_following">A’ leantainn</string>
 	<string name="edit_profile">Deasaich a’ phròifil</string>
@@ -264,7 +250,6 @@
 	<string name="see_new_posts">Postaichean ùra</string>
 	<string name="follow_back">Lean air ais</string>
 	<string name="button_follow_pending">Ri dhèiligeadh</string>
-	<string name="follows_you">’Gad leantainn</string>
 	<string name="manually_approves_followers">Ag aontachadh ri luchd-leantainn ùra a làimh</string>
 	<!-- translators: %,d is a valid placeholder, it formats the number with locale-dependent grouping separators -->
 	<plurals name="x_followers">
@@ -359,7 +344,6 @@
 	<string name="not_accepting_new_members">Gun ghabhail ri buill ùra</string>
 	<string name="category_special_interests">Ùidhean sònraichte</string>
 	<string name="signup_passwords_dont_match">Chan eil an dà fhacal-faire co-ionnann</string>
-	<string name="profile_add_row">Cuir ràgh ris</string>
 	<string name="profile_setup">Suidheachadh na pròifile</string>
 	<string name="profile_setup_subtitle">’S urrainn dhut seo a choileanadh air taba na Pròifile uair sam bith.</string>
 	<string name="follow_all">Lean na h-uile</string>
@@ -660,7 +644,6 @@
 	<string name="no_followed_hashtags_subtitle">Nochdaidh na leanas tu an-seo</string>
 	<string name="no_lists_title">Cuir rian air do dhachaigh le liostaichean</string>
 	<string name="no_lists_subtitle">Nochdaidh an fheadhainn agad an-seo</string>
-	<string name="manage_accounts">Cuir ris no leum eadar cunntasan</string>
 	<plurals name="x_posts_recently">
 		<item quantity="one">%,d phost o chionn goirid</item>
 		<item quantity="two">%,d phost o chionn goirid</item>
@@ -734,20 +717,6 @@
 	<string name="server_cant_mention_or_follow_you">Chan urrainn do neach sam bith a th’ air an fhrithealaiche seo do leantainn.</string>
 	<string name="server_can_interact_with_older">’S urrainn do dhaoine a th’ air an fhrithealaiche seo eadar-ghabhail leis na seann-phostaichean agad.</string>
 	<string name="unblocked_domain_x">Dhì-bhac thu an àrainn %s</string>
-	<string name="handle_help_title">Dè th’ ann an aithnichear?</string>
-	<string name="handle_title">An t-aithnichear aca</string>
-	<string name="handle_username_explanation">Seo an t-aithnichear àraidh aca air an fhrithealaiche aca. Dh’fhaoidte gu bheil luchd-cleachdaidh air a bheil an t-aon ainm air frithealaichean eile.</string>
-	<string name="handle_title_own">An t-aithnichear agad</string>
-	<string name="handle_username_explanation_own">Seo an t-aithnichear àraidh agad air an fhrithealaiche seo. Dh’fhaoidte gu bheil luchd-cleachdaidh air a bheil an t-aon ainm air frithealaichean eile.</string>
-	<string name="server">Frithealaiche</string>
-	<string name="handle_server_explanation">An dachaigh dhigiteach far a bheil na postaichean uile aca a’ fuireach.</string>
-	<string name="handle_explanation">On a dh’innseas aithnichearan cò cuideigin agus càit a bheil iad, ’s urrainn dhut conaltradh le daoine thar an lìonraidh shòisealta de &lt;a&gt;dh’ùrlaran le cumhachd ActivityPub&lt;/a&gt;.</string>
-	<string name="handle_server_explanation_own">Do dhachaigh dhigiteach far a bheil na postaichean uile agad a’ fuireach. Nach toigh leat an tè seo? Dèan imrich gu frithealaiche eile uair sam bith is thoir an luchd-leantainn agad leat cuideachd.</string>
-	<string name="handle_explanation_own">On a dh’innseas d’ aithnichear cò thusa agus càit a bheil thu, ’s urrainn do dhaoine conaltradh leat thar an lìonraidh shòisealta de &lt;a&gt;dh’ùrlaran le cumhachd ActivityPub&lt;/a&gt;.</string>
-	<string name="what_is_activitypub_title">Dè th’ ann an ActivityPub?</string>
-	<string name="what_is_activitypub">Tha ActivityPub coltach ri cànan a bhruidhneas Mastodon ri lìonraidhean sòisealta eile.\n\nLeigidh e leat ceangal a dhèanamh ri daoine chan ann air Mastodon a-mhàin ach air feadh aplacaidean sòisealta eile cuideachd agus conaltradh leotha.</string>
-	<string name="handle_copied">Chaidh lethbhreac dhen aithnichear a chur air an stòr-bhòrd.</string>
-	<string name="qr_code">Còd QR</string>
 	<string name="scan_qr_code">Sganaich còd QR</string>
 	<!-- Shown on a button that saves a file, after it was successfully saved -->
 	<string name="saved">Chaidh a shàbhaladh</string>
@@ -756,7 +725,6 @@
 	<string name="view_file">Seall</string>
 	<string name="share_sheet_preview_profile">%s air Mastodon</string>
 	<string name="share_sheet_preview_post">%1$s air Mastodon: “%2$s”</string>
-	<string name="copy_profile_link">Dèan lethbhreac dhen cheangal dhan phròifil</string>
 	<string name="in_app_browser">Brabhsair am broinn na h-aplacaid</string>
 	<string name="system_browser">Brabhsair an t-siostaim</string>
 	<string name="add_muted_word_short">Cuir facal ris</string>
@@ -900,7 +868,6 @@
 	</plurals>
 	<string name="familiar_followers_one">’Ga leantainn le %s</string>
 	<string name="familiar_followers_two">’Ga leantainn le %s ’s %s</string>
-	<string name="profile_saved_posts">Air a shàbhaladh</string>
 	<string name="profile_saved_posts_explanation">Chan fhaic ach thu fhèin na postaichean a shàbhail thu.</string>
 	<string name="search_people">Daoine</string>
 	<plurals name="familiar_followers_many">
@@ -1016,4 +983,88 @@
 	<string name="quote_followers_only_cancel">Till dhan deasachadh</string>
 	<string name="quote_followers_only_dont_show_again">Na seall an teachdaireachd seo a-rithist</string>
 	<string name="more_replies_found">Fhuair sinn lorg air barrachd fhreagairtean</string>
+	<string name="user_is_muted">’Ga mhùchadh</string>
+	<string name="user_is_bot">Cunntas fèin-obrachail</string>
+	<string name="profile_view_qr_code">Seall an còd QR</string>
+	<string name="feature_user">Brosnaich air a’ phròifil agam</string>
+	<string name="add_user_personal_note">Cuir nòta pearsanta ris</string>
+	<string name="mute_account">Mùch an cunntas</string>
+	<string name="block_account">Bac an cunntas</string>
+	<string name="remove_follower">Thoir an neach-leantainn air falbh</string>
+	<string name="report_account">Dèan gearan mun chunntas</string>
+	<string name="unblock_account">Dì-bhac an cunntas</string>
+	<string name="unmute_account">Dì-mhùch an cunntas</string>
+	<string name="unblock">Dì-bhac</string>
+	<string name="request_to_follow">Iarr leantainn</string>
+	<string name="cancel_follow_request">Sguir dhen iarrtas</string>
+	<string name="confirm_remove_follower_title">Toirt air falbh neach-leantainn</string>
+	<string name="confirm_remove_follower">Cha lean %s thu tuilleadh. A bheil thu cinnteach gu bheil thu airson leantainn air adhart?</string>
+	<string name="edit_user_personal_note">Deasaich an nòta pearsanta</string>
+	<string name="user_personal_note_explanation">Chan fhaic ach thu fhèin na nòtaichean pearsanta.</string>
+	<string name="user_personal_note">Nòta pearsanta</string>
+	<string name="timeline_filter_posts_and_boosts">Postaichean ’s brosnachaidhean</string>
+	<string name="timeline_filter_show_replies">Seall na freagairtean</string>
+	<string name="timeline_filter_show_boosts">Seall na brosnachaidhean</string>
+	<string name="timeline_filter_all_activity">A’ ghnìomhachd air fad</string>
+	<string name="timeline_filter_posts_and_replies">Postaichean ’s freagairtean</string>
+	<string name="timeline_filter_posts">Postaichean</string>
+	<string name="edit_profile_display_name">Ainm-taisbeanaidh</string>
+	<string name="edit_profile_x_custom_fields">Raointean gnàthaichte (%d)</string>
+	<string name="edit_profile_custom_fields">Raointean gnàthaichte</string>
+	<string name="edit_profile_custom_fields_description">Can riochdairean, ceanglaichean dhan taobh a-muigh ’s msaa.</string>
+	<string name="edit_profile_featured_hashtags_description">Leig le cleachdaichean an loidhne-ama agad a chriathradh a rèir cuspair</string>
+	<string name="edit_profile_tab_settings">Roghainnean tabaichean na pròifile</string>
+	<string name="edit_profile_add_bio">Cuir ris roinn mu mo dhèidhinn</string>
+	<string name="edit_profile_featured_hashtags">Tagaichean hais brosnaichte</string>
+	<string name="edit_profile_x_featured_hashtags">Tagaichean hais brosnaichte (%d)</string>
+	<string name="edit_profile_replace_image">Cuir ’na àite</string>
+	<string name="edit_profile_edit_display_name">Deasaich an t-ainm-taisbeanaidh</string>
+	<string name="edit_profile_edit_bio">Deasaich an roinn mu mo dhèidhinn</string>
+	<string name="add_profile_field">Cuir raon ris</string>
+	<string name="edit_profile_custom_fields_help">Gliocas: Cuir ri teistealachd do chunntais Mhastodon le dearbhadh cheanglaichean gu duilleagan-lìn a tha leatsa. <i>Barrachd fiosrachaidh</i></string>
+	<string name="edit_profile_link_verification_help_title">Cuir ceangalaichean dearbhte ris</string>
+	<string name="edit_profile_link_verification_help">Cuir ri teistealachd do chunntais Mhastodon le dearbhadh cheanglaichean gu duilleagan-lìn parsanta. Seo mar a nì thu e:</string>
+	<string name="edit_profile_link_verification_title1">Dèan lethbhreac dhen chòd HTML gu h-ìosal</string>
+	<string name="edit_profile_link_verification_title2">Cuir an còd ri bann-cinn HTML na làraich-lìn agad</string>
+	<string name="edit_profile_link_verification_text2">Ma chuireas tu ann còd ris a’ bhann-chinn agad, chan fhaicear an eileamaid &lt;a&gt;. Bacaidh a’ bhuadh rel=\"me\" riochd cuideigin eile air làraichean-lìn le susbaint air a gintinn o chleachdaiche – mar sin dheth tha e cudromach gun cùm thu i.</string>
+	<string name="edit_profile_link_verification_title3">Cuir an làrach-lìn agad ris ’na raon gnàthaichte</string>
+	<string name="edit_profile_link_verification_text3">Ma chuir thu an làrach-lìn agad mar raon ghnàthaichte ris cheana, feumaidh tu a sguabadh às ’s a chur ris a-rithist airson an dearbhadh a chur gu dol.</string>
+	<string name="edit_profile_field">Deasaich an raon</string>
+	<string name="edit_profile_field_label_example">Can “Làrach-lìn phearsanta”</string>
+	<string name="edit_profile_field_value_example">Can “example.com”</string>
+	<plurals name="x_chars_max">
+		<item quantity="one">%,d charactar air a char as motha</item>
+		<item quantity="two">%,d charactar air a char as motha</item>
+		<item quantity="few">%,d caractaran air a char as motha</item>
+		<item quantity="other">%,d caractar air a char as motha</item>
+	</plurals>
+	<plurals name="hashtag_used_in_x_posts">
+		<item quantity="one">’Ga chleachdadh ann an %,d phost</item>
+		<item quantity="two">’Ga chleachdadh ann an %,d phost</item>
+		<item quantity="few">’Ga chleachdadh ann an %,d postaichean</item>
+		<item quantity="other">’Ga chleachdadh ann am %,d post</item>
+	</plurals>
+	<string name="add_featured_hashtag">Cuir taga hais ris</string>
+	<string name="hashtag">Taga hais</string>
+	<string name="confirm_remove_featured_hashtag">A bheil thu airson an taga hais a thoirt air falbh?</string>
+	<string name="edit_profile_show_media_tab">An taba “Meadhanan”</string>
+	<string name="edit_profile_show_media_tab_description">Seallaidh seo na postaichean agad ris a bheil meadhan</string>
+	<string name="edit_profile_show_media_replies">Gabh a-staigh na freagairtean</string>
+	<string name="edit_profile_show_featured_tab">An taba “’Ga bhrosnachadh”</string>
+	<string name="edit_profile_show_featured_tab_description">Seo àite airson cunntasan eile a bhrosnachadh</string>
+	<!-- %s is the current user's server domain -->
+	<string name="edit_profile_tabs_explanation">Gnàthaichidh na roghainnean seo na chì an luchd-cleachdaidh air %s sna h-aplacaidean oifigeil ach dh’fhaoidte nach bi iad an sàs dhan luchd-cleachdaidh air frithealaichean eile is aplacaidean treas-phàrtaidh.</string>
+	<string name="handle_explanation_title">Tha aithnichear coltach ri seòladh puist-d.</string>
+	<string name="handle_explanation_username">Is %s ainm-cleachdaiche a’ chunntais seo air an fhrithealaiche aca-san. Dh’fhaoidte gu bheil an t-aon ainm-cleachdaiche le cuideigin air frithealaiche eile.</string>
+	<string name="handle_explanation_domain">Is %s am frithealaiche a tha ag òstadh pròifil ’s postaichean a’ chleachdaiche.</string>
+	<string name="pinned_post">Prìnichte</string>
+	<string name="view_all_pinned">Seall na postaichean prìnichte uile</string>
+	<string name="profile_show_all_fields">Seall a h-uile raon</string>
+	<string name="unfeature_user">Na brosnaich air a’ phròifil agam</string>
+	<string name="confirm_delete_profile_field">A bheil thu airson an raon a sguabadh às?</string>
+	<string name="confirm_delete_avatar">A bheil thu airson dealbh na pròifil a thoirt air falbh?</string>
+	<string name="confirm_delete_cover">A bheil thu airson dealbh a’ bhanna-chinn a thoirt air falbh?</string>
+	<string name="profile_followers">Luchd-leantainn</string>
+	<string name="profile_following">A’ leantainn</string>
+	<!-- Placeholders are user display names -->
 </resources>

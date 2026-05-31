@@ -2,7 +2,7 @@ name: Build and deploy production
  
 on:
   push:
-    tags:        
+    tags:
       - '**'
   workflow_dispatch:
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - name: Check GitHub CLI
         run: |
           gh --version
-        
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:

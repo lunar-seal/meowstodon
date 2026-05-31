@@ -22,11 +22,14 @@ public class AccountLocalPreferences{
 	public boolean serverSideFiltersSupported;
 	public ArrayList<Emoji> recentCustomEmoji;
 	private final static Type recentCustomEmojiType=new TypeToken<ArrayList<Emoji>>() {}.getType();
+	public boolean adminReportsNotifications, adminSignupsNotifications;
 
 	public AccountLocalPreferences(SharedPreferences prefs){
 		this.prefs=prefs;
 		serverSideFiltersSupported=prefs.getBoolean("serverSideFilters", false);
 		recentCustomEmoji=fromJson(prefs.getString("recentCustomEmoji", null), recentCustomEmojiType, new ArrayList<>());
+		adminReportsNotifications=prefs.getBoolean("adminReports", true);
+		adminSignupsNotifications=prefs.getBoolean("adminSignups", true);
 	}
 
 	public long getNotificationsPauseEndTime(){
@@ -41,6 +44,8 @@ public class AccountLocalPreferences{
 		prefs.edit()
 				.putBoolean("serverSideFilters", serverSideFiltersSupported)
 				.putString("recentCustomEmoji", gson.toJson(recentCustomEmoji))
+				.putBoolean("adminReports", adminReportsNotifications)
+				.putBoolean("adminSignups", adminSignupsNotifications)
 				.apply();
 	}
 

@@ -16,31 +16,38 @@ import java.util.EnumSet;
 import java.util.List;
 
 public class GetNotificationsV2 extends MastodonAPIRequest<GetNotificationsV2.GroupedNotificationsResults>{
-	public GetNotificationsV2(String maxID, int limit, EnumSet<NotificationType> includeTypes, EnumSet<NotificationType> groupedTypes){
-		this(maxID, limit, includeTypes, groupedTypes, null);
+	public GetNotificationsV2(String maxID, int limit, EnumSet<NotificationType> includeTypes, EnumSet<NotificationType> groupedTypes, EnumSet<NotificationType> excludeTypes){
+		this(maxID, limit, includeTypes, groupedTypes, null, excludeTypes);
 	}
 
-	public GetNotificationsV2(String maxID, int limit, EnumSet<NotificationType> includeTypes, EnumSet<NotificationType> groupedTypes, String onlyAccountID){
+	public GetNotificationsV2(String maxID, int limit, EnumSet<NotificationType> includeTypes, EnumSet<NotificationType> groupedTypes, String onlyAccountID, EnumSet<NotificationType> excludeTypes){
 		super(HttpMethod.GET, "/notifications", GroupedNotificationsResults.class);
 		if(maxID!=null)
 			addQueryParameter("max_id", maxID);
 		if(limit>0)
 			addQueryParameter("limit", ""+limit);
 		if(includeTypes!=null){
-			for(String type:ApiUtils.enumSetToStrings(includeTypes, NotificationType.class)){
+			for(String type:ApiUtils.enumSetToStrings(includeTypes)){
 				addQueryParameter("types[]", type);
-			}
-			for(String type:ApiUtils.enumSetToStrings(EnumSet.complementOf(includeTypes), NotificationType.class)){
-				addQueryParameter("exclude_types[]", type);
 			}
 		}
 		if(groupedTypes!=null){
-			for(String type:ApiUtils.enumSetToStrings(groupedTypes, NotificationType.class)){
+			for(String type:ApiUtils.enumSetToStrings(groupedTypes)){
 				addQueryParameter("grouped_types[]", type);
 			}
 		}
-		if(!TextUtils.isEmpty(onlyAccountID))
+		if(!TextUtils.isEmpty(onlyAccountID)){
 			addQueryParameter("account_id", onlyAccountID);
+			addQueryParameter("include_filtered", "true");
+		}
+		for(String type:ApiUtils.enumSetToStrings(NotificationType.getAllTypes())){
+			addQueryParameter("supported_types[]", type);
+		}
+		if(excludeTypes!=null){
+			for(String type:ApiUtils.enumSetToStrings(excludeTypes)){
+				addQueryParameter("exclude_types[]", type);
+			}
+		}
 		removeUnsupportedItems=true;
 	}
 

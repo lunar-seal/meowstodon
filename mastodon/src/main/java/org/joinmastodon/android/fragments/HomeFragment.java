@@ -24,12 +24,15 @@ import org.joinmastodon.android.PushNotificationReceiver;
 import org.joinmastodon.android.R;
 import org.joinmastodon.android.api.requests.notifications.GetNotificationsV1;
 import org.joinmastodon.android.api.requests.notifications.GetUnreadNotificationsCount;
+import org.joinmastodon.android.api.session.AccountLocalPreferences;
 import org.joinmastodon.android.api.session.AccountSession;
 import org.joinmastodon.android.api.session.AccountSessionManager;
 import org.joinmastodon.android.events.NotificationsMarkerUpdatedEvent;
+import org.joinmastodon.android.events.SelfAccountUpdatedEvent;
 import org.joinmastodon.android.events.StatusDisplaySettingsChangedEvent;
 import org.joinmastodon.android.fragments.discover.DiscoverFragment;
 import org.joinmastodon.android.fragments.onboarding.OnboardingFollowSuggestionsFragment;
+import org.joinmastodon.android.fragments.profile.ProfileFragment;
 import org.joinmastodon.android.model.Account;
 import org.joinmastodon.android.model.Instance;
 import org.joinmastodon.android.model.Notification;
@@ -297,7 +300,13 @@ public class HomeFragment extends AppKitFragment implements AssistContentProvide
 		if(instance==null)
 			return;
 		if(instance.getApiVersion()>=2){
-			new GetUnreadNotificationsCount(EnumSet.allOf(NotificationType.class), NotificationType.getGroupableTypes())
+			EnumSet<NotificationType> excludeTypes=EnumSet.noneOf(NotificationType.class);
+			AccountLocalPreferences lp=AccountSessionManager.get(accountID).getLocalPreferences();
+			if(!lp.adminReportsNotifications)
+				excludeTypes.add(NotificationType.ADMIN_REPORT);
+			if(!lp.adminSignupsNotifications)
+				excludeTypes.add(NotificationType.ADMIN_SIGNUP);
+			new GetUnreadNotificationsCount(null, NotificationType.getGroupableTypes(), excludeTypes)
 					.setCallback(new Callback<>(){
 						@Override
 						public void onSuccess(GetUnreadNotificationsCount.Response result){
@@ -379,6 +388,13 @@ public class HomeFragment extends AppKitFragment implements AssistContentProvide
 			homeTimelineFragment.rebuildAllDisplayItems();
 		if(notificationsFragment.loaded)
 			notificationsFragment.rebuildAllDisplayItems();
+	}
+
+	@Subscribe
+	public void onAccountUpdated(SelfAccountUpdatedEvent ev){
+		if(ev.accountID().equals(accountID)){
+			ViewImageLoader.loadWithoutAnimation(tabBarAvatar, null, new UrlImageLoaderRequest(ev.account().avatar, V.dp(24), V.dp(24)));
+		}
 	}
 
 	@Override

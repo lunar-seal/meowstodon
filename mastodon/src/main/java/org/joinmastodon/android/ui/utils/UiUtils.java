@@ -3,6 +3,7 @@ package org.joinmastodon.android.ui.utils;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.UiModeManager;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
@@ -31,11 +32,14 @@ import android.os.Vibrator;
 import android.os.ext.SdkExtensions;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.text.style.BulletSpan;
+import android.text.style.ForegroundColorSpan;
 import android.transition.ChangeBounds;
 import android.transition.ChangeScroll;
 import android.transition.Fade;
@@ -50,6 +54,7 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,9 +66,11 @@ import org.joinmastodon.android.GlobalUserPreferences;
 import org.joinmastodon.android.MainActivity;
 import org.joinmastodon.android.MastodonApp;
 import org.joinmastodon.android.R;
+import org.joinmastodon.android.api.requests.accounts.RemoveAccountFromFollowers;
 import org.joinmastodon.android.api.requests.accounts.SetAccountBlocked;
 import org.joinmastodon.android.api.requests.accounts.SetAccountFollowed;
 import org.joinmastodon.android.api.requests.accounts.SetAccountMuted;
+import org.joinmastodon.android.api.requests.accounts.SetAccountPersonalNote;
 import org.joinmastodon.android.api.requests.accounts.SetDomainBlocked;
 import org.joinmastodon.android.api.requests.search.GetSearchResults;
 import org.joinmastodon.android.api.requests.statuses.DeleteStatus;
@@ -72,7 +79,7 @@ import org.joinmastodon.android.api.session.AccountSessionManager;
 import org.joinmastodon.android.events.RemoveAccountPostsEvent;
 import org.joinmastodon.android.events.StatusDeletedEvent;
 import org.joinmastodon.android.fragments.HashtagTimelineFragment;
-import org.joinmastodon.android.fragments.ProfileFragment;
+import org.joinmastodon.android.fragments.profile.ProfileFragment;
 import org.joinmastodon.android.fragments.ThreadFragment;
 import org.joinmastodon.android.model.Account;
 import org.joinmastodon.android.model.Emoji;
@@ -91,6 +98,7 @@ import org.joinmastodon.android.ui.sheets.MuteAccountConfirmationSheet;
 import org.joinmastodon.android.ui.text.CustomEmojiSpan;
 import org.joinmastodon.android.ui.text.SpacerSpan;
 import org.joinmastodon.android.ui.viewholders.ListItemViewHolder;
+import org.joinmastodon.android.ui.views.FloatingHintEditTextLayout;
 import org.parceler.Parcels;
 
 import java.io.File;
@@ -189,7 +197,7 @@ public class UiUtils{
 			return context.getString(R.string.time_hours_ago_short, diff/3600_000L);
 		}else{
 			int days=(int)(diff/(3600_000L*24L));
-			if(days>30){
+			if(days>7){
 				ZonedDateTime dt=instant.atZone(ZoneId.systemDefault());
 				return formatDateShort(dt);
 			}
@@ -249,6 +257,21 @@ public class UiUtils{
 		dateFormatterShortWithYear=DateTimeFormatter.ofPattern(localizedPatternWithYear, locale);
 		var localizedPattern=DateFormat.getBestDateTimePattern(locale, DATE_PATTERN_SHORT);
 		dateFormatterShort=DateTimeFormatter.ofPattern(localizedPattern, locale);
+	}
+
+	public static String formatDateDay(Context context, ZonedDateTime dt){
+		ZonedDateTime now=ZonedDateTime.now();
+		LocalDate today=now.toLocalDate();
+		LocalDate date=dt.toLocalDate();
+		if(date.equals(today)){
+			return context.getString(R.string.today);
+		}else if(date.equals(today.minusDays(1))){
+			return context.getString(R.string.yesterday);
+		}else if(date.equals(today.plusDays(1))){
+			return context.getString(R.string.tomorrow);
+		}else{
+			return formatDateShort(dt);
+		}
 	}
 
 	private static String formatDateShort(ZonedDateTime dt){
@@ -336,6 +359,10 @@ public class UiUtils{
 	/** Linear interpolation between {@code startValue} and {@code endValue} by {@code fraction}. */
 	public static int lerp(int startValue, int endValue, float fraction) {
 		return startValue + Math.round(fraction * (endValue - startValue));
+	}
+
+	public static float lerp(float startValue, float endValue, float fraction) {
+		return startValue+fraction*(endValue-startValue);
 	}
 
 	public static String getFileName(Uri uri){
@@ -620,23 +647,26 @@ public class UiUtils{
 			delete.run();
 	}
 
-	public static void setRelationshipToActionButtonM3(Relationship relationship, Account account, Button button){
+	public static void setRelationshipToActionButton(Relationship relationship, Account account, Button button, boolean compact){
 		int styleRes;
 		if(relationship.blocking){
-			button.setText(R.string.button_blocked);
-			styleRes=R.style.Widget_Mastodon_M3_Button_Tonal_Error;
-		}else if(relationship.blockedBy){
+			button.setText(R.string.unblock);
+			styleRes=compact ? R.style.Widget_Mastodon_M3_Button_Tonal : R.style.Widget_Mastodon_M3_Button_Outlined_Neutral;
+		}else if(!relationship.following && !relationship.followedBy && !relationship.requested){
 			button.setText(R.string.button_follow);
 			styleRes=R.style.Widget_Mastodon_M3_Button_Filled;
-		}else if(relationship.requested){
-			button.setText(R.string.button_follow_pending);
-			styleRes=R.style.Widget_Mastodon_M3_Button_Tonal;
-		}else if(!relationship.following){
-			button.setText(relationship.followedBy ? R.string.follow_back : R.string.button_follow);
+		}else if(!relationship.following && !relationship.requested && account.locked){
+			button.setText(compact ? R.string.request_to_follow_short : R.string.request_to_follow);
+			styleRes=R.style.Widget_Mastodon_M3_Button_Filled;
+		}else if(!relationship.following && relationship.requested){
+			button.setText(compact ? R.string.cancel_follow_request_short : R.string.cancel_follow_request);
+			styleRes=compact ? R.style.Widget_Mastodon_M3_Button_Tonal : R.style.Widget_Mastodon_M3_Button_Outlined_Neutral;
+		}else if(!relationship.following && relationship.followedBy){
+			button.setText(R.string.follow_back);
 			styleRes=R.style.Widget_Mastodon_M3_Button_Filled;
 		}else{
-			button.setText(R.string.button_following);
-			styleRes=R.style.Widget_Mastodon_M3_Button_Tonal;
+			button.setText(R.string.unfollow);
+			styleRes=compact ? R.style.Widget_Mastodon_M3_Button_Tonal : R.style.Widget_Mastodon_M3_Button_Outlined_Neutral;
 		}
 
 		button.setEnabled(relationship.blocking || (!relationship.blockedBy && !account.suspended));
@@ -882,7 +912,7 @@ public class UiUtils{
 								launchWebBrowser(context, url);
 							}
 						})
-						.wrapProgress((Activity)context, R.string.loading, true)
+						.wrapProgress(context, R.string.loading, true)
 						.exec(accountID);
 				return;
 			}
@@ -1195,5 +1225,106 @@ public class UiUtils{
 		holder.itemView.setBackground(UiUtils.getThemeDrawable(parentView.getContext(), android.R.attr.selectableItemBackground));
 		holder.itemView.setOnClickListener(v->holder.onClick());
 		return holder.itemView;
+	}
+
+	public static CharSequence makeColoredString(CharSequence str, int color){
+		Spannable spannable=str instanceof Spannable s ? s : new SpannableString(str);
+		spannable.setSpan(new ForegroundColorSpan(color), 0, spannable.length(), 0);
+		return spannable;
+	}
+
+	public static CharSequence substituteStringWithSpan(Context ctx, @StringRes int res, String arg, Object span){
+		String str=ctx.getString(res, "{str}");
+		int index=str.indexOf("{str}");
+		if(index==-1)
+			return str;
+		SpannableStringBuilder ssb=new SpannableStringBuilder(index>0 ? str.substring(0, index) : "");
+		ssb.append(arg, span, 0);
+		int end=index+5;
+		if(end<str.length())
+			ssb.append(str.substring(end));
+		return ssb;
+	}
+
+	public static CharSequence makeRedString(Context context, CharSequence s){
+		int color=getThemeColor(context, R.attr.colorM3Error);
+		SpannableString ss=new SpannableString(s);
+		ss.setSpan(new ForegroundColorSpan(color), 0, ss.length(), 0);
+		return ss;
+	}
+
+	public static CharSequence makeRedString(Context context, @StringRes int res, Object... args){
+		return makeRedString(context, context.getString(res, args));
+	}
+
+	public static void editAccountPersonalNote(Context context, String accountID, Account account, Relationship relationship, Consumer<Relationship> onDone){
+		AlertDialog.Builder bldr=new M3AlertDialogBuilder(context)
+				.setHelpText(R.string.user_personal_note_explanation)
+				.setTitle(TextUtils.isEmpty(relationship.note) ? R.string.add_user_personal_note : R.string.edit_user_personal_note)
+				.setNegativeButton(R.string.cancel, null)
+				.setPositiveButton(R.string.save, null);
+
+		FloatingHintEditTextLayout editWrap=(FloatingHintEditTextLayout) bldr.getContext().getSystemService(LayoutInflater.class).inflate(R.layout.floating_hint_edit_text, null);
+		EditText edit=editWrap.findViewById(R.id.edit);
+		edit.setHint(R.string.user_personal_note);
+		edit.setSingleLine(false);
+		edit.setMaxLines(5);
+		edit.setMinLines(2);
+		edit.setGravity(Gravity.TOP | Gravity.START);
+		if(!TextUtils.isEmpty(relationship.note))
+			edit.setText(relationship.note);
+		editWrap.updateHint();
+		bldr.setView(editWrap);
+		AlertDialog alert=bldr.show();
+		Button saveButton=alert.getButton(AlertDialog.BUTTON_POSITIVE);
+		saveButton.setOnClickListener(v->{
+			UiUtils.showProgressForAlertButton(saveButton, true);
+			new SetAccountPersonalNote(account.id, edit.getText().toString())
+					.setCallback(new Callback<>(){
+						@Override
+						public void onSuccess(Relationship result){
+							onDone.accept(result);
+							UiUtils.showProgressForAlertButton(saveButton, false);
+							alert.dismiss();
+						}
+
+						@Override
+						public void onError(ErrorResponse error){
+							error.showToast(context);
+							UiUtils.showProgressForAlertButton(saveButton, false);
+						}
+					})
+					.exec(accountID);
+		});
+	}
+
+	public static void confirmAndRemoveFollower(Activity context, String accountID, Account account, Consumer<Relationship> onDone){
+		AlertDialog alert=new M3AlertDialogBuilder(context)
+				.setTitle(R.string.confirm_remove_follower_title)
+				.setMessage(context.getString(R.string.confirm_remove_follower, account.getDisplayUsername()))
+				.setPositiveButton(R.string.remove_follower, null)
+				.setNegativeButton(R.string.cancel, null)
+				.show();
+		Button okButton=alert.getButton(AlertDialog.BUTTON_POSITIVE);
+		okButton.setOnClickListener(v->{
+			UiUtils.showProgressForAlertButton(okButton, true);
+			new RemoveAccountFromFollowers(account.id)
+					.setCallback(new Callback<>(){
+						@Override
+						public void onSuccess(Relationship result){
+							onDone.accept(result);
+							UiUtils.showProgressForAlertButton(okButton, false);
+							alert.dismiss();
+						}
+
+						@Override
+						public void onError(ErrorResponse error){
+							error.showToast(context);
+							UiUtils.showProgressForAlertButton(okButton, false);
+						}
+					})
+					.wrapProgress(context, R.string.loading, true)
+					.exec(accountID);
+		});
 	}
 }

@@ -19,14 +19,7 @@
 	<string name="discard_draft">Želáte si zahodiť koncept?</string>
 	<string name="discard">Zahodiť</string>
 	<string name="cancel">Zrušiť</string>
-	<plurals name="followers">
-		<item quantity="one">sledovateľ</item>
-		<item quantity="few">sledovatelia</item>
-		<item quantity="many">sledovateľov</item>
-		<item quantity="other">sledovateľov</item>
-	</plurals>
 	<string name="posts">Príspevky</string>
-	<string name="posts_and_replies">Príspevky a odpovede</string>
 	<string name="media">Súbory</string>
 	<string name="button_follow">Sledovať</string>
 	<string name="button_following">Sledované</string>
@@ -158,4 +151,6 @@
 	<!-- Substituted into `date_of_birth_explanation` -->
 	<!-- %s is a username, i.e. @Gargron -->
 	<!-- %s is current user's full username, e.g. @example@mastodon.social -->
+	<!-- %s is the current user's server domain -->
+	<!-- Placeholders are user display names -->
 </resources>
