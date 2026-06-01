@@ -93,6 +93,7 @@ import org.joinmastodon.android.ui.tabs.TabLayoutMediator;
 import org.joinmastodon.android.ui.text.HtmlParser;
 import org.joinmastodon.android.ui.text.ImageSpanThatDoesNotBreakShitForNoGoodReason;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.utils.HandleColors;
 import org.joinmastodon.android.ui.views.CoverImageView;
 import org.joinmastodon.android.ui.views.CustomDrawingOrderLinearLayout;
 import org.joinmastodon.android.ui.views.InlineBadgeLayout;
@@ -631,7 +632,7 @@ public class ProfileFragment extends LoaderFragment implements ScrollableToTop, 
 		progress.setVisibility(View.GONE);
 		errorView.setVisibility(View.GONE);
 		innerProgress.setVisibility(View.VISIBLE);
-		this.username.setText("@"+username+"@"+domain);
+		this.username.setText(HandleColors.colorizeHandle(username, domain));
 		name.setText(username);
 		avatar.setImageResource(R.drawable.image_placeholder);
 		cover.setImageResource(R.drawable.image_placeholder);
@@ -695,10 +696,7 @@ public class ProfileFragment extends LoaderFragment implements ScrollableToTop, 
 			domain=AccountSessionManager.get(accountID).domain;
 
 		if(account.locked){
-			ssb=new SpannableStringBuilder("@");
-			ssb.append(account.username);
-			ssb.append("@");
-			ssb.append(domain);
+			ssb=new SpannableStringBuilder(HandleColors.colorizeHandle(account.username, domain));
 			ssb.append(" ");
 			Drawable lock=username.getResources().getDrawable(R.drawable.ic_lock_fill1_20px, getActivity().getTheme()).mutate();
 			lock.setBounds(0, 0, V.dp(16), V.dp(16));
@@ -706,7 +704,7 @@ public class ProfileFragment extends LoaderFragment implements ScrollableToTop, 
 			ssb.append(getString(R.string.manually_approves_followers), new ImageSpanThatDoesNotBreakShitForNoGoodReason(lock, ImageSpan.ALIGN_BOTTOM), 0);
 			username.setText(ssb);
 		}else{
-			username.setText("@"+account.username+"@"+domain);
+			username.setText(HandleColors.colorizeHandle(account.username, domain));
 		}
 
 		CharSequence parsedBio=HtmlParser.parse(account.note, account.emojis, Collections.emptyList(), Collections.emptyList(), accountID, account, getActivity());

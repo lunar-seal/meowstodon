@@ -29,6 +29,7 @@ public class SettingsDisplayFragment extends BaseSettingsFragment<Void>{
 	private ImageView themeTransitionWindowView;
 	private ListItem<Void> themeItem;
 	private CheckableListItem<Void> showCWsItem, hideSensitiveMediaItem, interactionCountsItem, emojiInNamesItem, dynamicColorsItem;
+	private CheckableListItem<Void> colorUsernamesItem, colorDomainsItem;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -47,6 +48,8 @@ public class SettingsDisplayFragment extends BaseSettingsFragment<Void>{
 		items.add(hideSensitiveMediaItem=new CheckableListItem<>(R.string.settings_hide_sensitive_media, 0, CheckableListItem.Style.SWITCH, GlobalUserPreferences.hideSensitiveMedia, R.drawable.ic_no_adult_content_24px, this::toggleCheckableItem));
 		items.add(interactionCountsItem=new CheckableListItem<>(R.string.settings_show_interaction_counts, 0, CheckableListItem.Style.SWITCH, GlobalUserPreferences.showInteractionCounts, R.drawable.ic_social_leaderboard_24px, this::toggleCheckableItem));
 		items.add(emojiInNamesItem=new CheckableListItem<>(R.string.settings_show_emoji_in_names, 0, CheckableListItem.Style.SWITCH, GlobalUserPreferences.customEmojiInNames, R.drawable.ic_emoticon_24px, this::toggleCheckableItem));
+		items.add(colorUsernamesItem=new CheckableListItem<>(R.string.settings_color_usernames, 0, CheckableListItem.Style.SWITCH, GlobalUserPreferences.colorUsernames, R.drawable.ic_person_24px, this::toggleCheckableItem));
+		items.add(colorDomainsItem=new CheckableListItem<>(R.string.settings_color_domains, 0, CheckableListItem.Style.SWITCH, GlobalUserPreferences.colorDomains, R.drawable.ic_dns_24px, this::toggleCheckableItem));
 		onDataLoaded(items);
 	}
 
@@ -70,6 +73,8 @@ public class SettingsDisplayFragment extends BaseSettingsFragment<Void>{
 		GlobalUserPreferences.hideSensitiveMedia=hideSensitiveMediaItem.checked;
 		GlobalUserPreferences.showInteractionCounts=interactionCountsItem.checked;
 		GlobalUserPreferences.customEmojiInNames=emojiInNamesItem.checked;
+		GlobalUserPreferences.colorUsernames=colorUsernamesItem.checked;
+		GlobalUserPreferences.colorDomains=colorDomainsItem.checked;
 		GlobalUserPreferences.save();
 		E.post(new StatusDisplaySettingsChangedEvent(accountID));
 	}

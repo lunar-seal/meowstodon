@@ -443,6 +443,8 @@
 	<string name="settings_hide_sensitive_media">Cover up media marked as sensitive</string>
 	<string name="settings_show_interaction_counts">Post interaction counts</string>
 	<string name="settings_show_emoji_in_names">Custom emoji in display names</string>
+	<string name="settings_color_usernames">Color-code usernames</string>
+	<string name="settings_color_domains">Color-code domains</string>
 	<plurals name="in_x_seconds">
 		<item quantity="one">in %d second</item>
 		<item quantity="other">in %d seconds</item>

@@ -17,6 +17,7 @@ import org.joinmastodon.android.ui.text.CustomEmojiSpan;
 import org.joinmastodon.android.ui.text.HtmlParser;
 import org.joinmastodon.android.ui.utils.CustomEmojiHelper;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.utils.HandleColors;
 
 import me.grishka.appkit.imageloader.ImageLoaderViewHolder;
 import me.grishka.appkit.imageloader.requests.ImageLoaderRequest;
@@ -104,7 +105,7 @@ public class InlineStatusStatusDisplayItem extends StatusDisplayItem{
 		public void onBind(InlineStatusStatusDisplayItem item){
 			itemView.setPaddingRelative(V.dp(item.fullWidth ? 16 : 64), item.removeTopPadding ? 0 : V.dp(8), itemView.getPaddingEnd(), itemView.getPaddingBottom());
 			name.setText(item.parsedName);
-			username.setText(item.status.account.getDisplayUsername());
+			username.setText(HandleColors.colorizeHandle(item.status.account.acct));
 			if(item.parsedPostText.length()==0){
 				text.setTextColor(UiUtils.getThemeColor(itemView.getContext(), R.attr.colorM3Outline));
 				text.setText(itemView.getContext().getResources().getQuantityString(R.plurals.x_attachments, item.status.mediaAttachments.size(), item.status.mediaAttachments.size()));

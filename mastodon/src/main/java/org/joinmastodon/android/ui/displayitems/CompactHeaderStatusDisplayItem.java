@@ -7,6 +7,7 @@ import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.text.HtmlParser;
 import org.joinmastodon.android.ui.utils.CustomEmojiHelper;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.utils.HandleColors;
 import org.parceler.Parcels;
 
 import java.time.Instant;
@@ -98,7 +100,7 @@ public class CompactHeaderStatusDisplayItem extends StatusDisplayItem{
 			else
 				time=item.context.getString(R.string.edited_timestamp, UiUtils.formatRelativeTimestamp(itemView.getContext(), item.status.editedAt));
 
-			timeAndUsername.setText(time+" · @"+item.user.acct);
+			timeAndUsername.setText(TextUtils.concat(time+" · ", HandleColors.colorizeHandle(item.user.acct)));
 //			itemView.setPadding(itemView.getPaddingLeft(), itemView.getPaddingTop(), itemView.getPaddingRight(), item.needBottomPadding ? V.dp(6) : V.dp(4));
 			if(clickableThing!=null){
 				clickableThing.setContentDescription(item.context.getString(R.string.avatar_description, item.user.acct));

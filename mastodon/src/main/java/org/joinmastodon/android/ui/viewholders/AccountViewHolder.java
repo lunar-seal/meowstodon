@@ -41,11 +41,11 @@ import org.joinmastodon.android.model.Relationship;
 import org.joinmastodon.android.model.viewmodel.AccountViewModel;
 import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.utils.HandleColors;
 import org.joinmastodon.android.ui.views.CheckableRelativeLayout;
 import org.joinmastodon.android.ui.views.ProgressBarButton;
 import org.parceler.Parcels;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -122,7 +122,7 @@ public class AccountViewHolder extends BindableViewHolder<AccountViewModel> impl
 	@Override
 	public void onBind(AccountViewModel item){
 		name.setText(item.parsedName);
-		username.setText("@"+item.account.acct);
+		username.setText(HandleColors.colorizeHandle(item.account.acct));
 		if(followers!=null){
 			String followersStr=fragment.getResources().getQuantityString(R.plurals.x_followers, item.account.followersCount>1000 ? 999 : (int)item.account.followersCount);
 			String followersNum=UiUtils.abbreviateNumber(item.account.followersCount);
