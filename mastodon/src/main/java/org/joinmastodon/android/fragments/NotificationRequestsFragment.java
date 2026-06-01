@@ -25,6 +25,7 @@ import org.joinmastodon.android.ui.BetterItemAnimator;
 import org.joinmastodon.android.ui.DividerItemDecoration;
 import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.Snackbar;
+import org.joinmastodon.android.ui.utils.HandleColors;
 import org.parceler.Parcels;
 
 import java.util.HashMap;
@@ -190,7 +191,7 @@ public class NotificationRequestsFragment extends MastodonRecyclerFragment<Notif
 		public void onBind(NotificationRequest item){
 			AccountViewModel model=Objects.requireNonNull(accountViewModels.get(item.account.id));
 			name.setText(model.parsedName);
-			username.setText(item.account.getDisplayUsername());
+			username.setText(HandleColors.colorizeHandle(item.account.acct));
 			badge.setText(item.notificationsCount>99 ? String.format("%d+", 99) : String.format("%d", item.notificationsCount));
 		}
 

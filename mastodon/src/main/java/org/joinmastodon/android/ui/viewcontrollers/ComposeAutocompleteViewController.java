@@ -23,6 +23,7 @@ import org.joinmastodon.android.ui.BetterItemAnimator;
 import org.joinmastodon.android.ui.OutlineProviders;
 import org.joinmastodon.android.ui.utils.HideableSingleViewRecyclerAdapter;
 import org.joinmastodon.android.ui.utils.UiUtils;
+import org.joinmastodon.android.ui.utils.HandleColors;
 import org.joinmastodon.android.ui.views.FilterChipView;
 
 import java.util.ArrayList;
@@ -372,7 +373,7 @@ public class ComposeAutocompleteViewController{
 
 		@Override
 		public void onBind(AccountViewModel item){
-			username.setText("@"+item.account.acct);
+			username.setText(HandleColors.colorizeHandle(item.account.acct));
 		}
 
 		@Override
