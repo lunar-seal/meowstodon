@@ -3,7 +3,7 @@
 	<color name="shortcut_icon_background">#000</color>
 	<color name="shortcut_icon_foreground">@color/m3_sys_dark_primary</color>
 	<color name="md_theme_primary">#DBBDDC</color>
-	<color name="md_theme_onPrimary">#321F36</color>
+	<color name="md_theme_onPrimary">#B18AD6</color>
 	<color name="md_theme_primaryContainer">#140419</color>
 	<color name="md_theme_onPrimaryContainer">#AE92AF</color>
 	<color name="md_theme_secondary">#FFACE7</color>
@@ -20,7 +20,7 @@
 	<color name="md_theme_onErrorContainer">#FFFCFF</color>
 	<color name="md_theme_background">#000000</color>
 	<color name="md_theme_onBackground">#E7E1E3</color>
-	<color name="md_theme_surface">#361D5F</color>
+	<color name="md_theme_surface">#150524</color>
 	<color name="md_theme_onSurface">#E6E1E4</color>
 	<color name="md_theme_surfaceVariant">#35086D</color>
 	<color name="md_theme_onSurfaceVariant">#DBBFD0</color>
