@@ -19,20 +19,19 @@ public class HandleColors{
 
 	public static CharSequence colorizeHandle(String user, String instance){
 		// make username color depend on the full handle, as usernames are only unique per instance
-		int userColor=stringToColor(user+instance);
-		int instanceColor=stringToColor(instance);
-
 		SpannableStringBuilder ssb=new SpannableStringBuilder();
 		ssb.append('@');
 		int userStart=ssb.length();
 		ssb.append(user);
 		if(GlobalUserPreferences.colorUsernames)
-			ssb.setSpan(new ForegroundColorSpan(userColor), userStart, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-		ssb.append('@');
-		int domainStart=ssb.length();
-		ssb.append(instance);
-		if(GlobalUserPreferences.colorDomains)
-			ssb.setSpan(new ForegroundColorSpan(instanceColor), domainStart, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+			ssb.setSpan(new ForegroundColorSpan(stringToColor(user+instance)), userStart, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		if (instance != null){
+			ssb.append('@');
+			int domainStart=ssb.length();
+			ssb.append(instance);
+			if(GlobalUserPreferences.colorDomains)
+				ssb.setSpan(new ForegroundColorSpan(stringToColor(instance)), domainStart, ssb.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+		}
 		return ssb;
 	}
 
