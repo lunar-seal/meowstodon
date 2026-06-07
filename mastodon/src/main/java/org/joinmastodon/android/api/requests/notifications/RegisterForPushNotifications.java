@@ -7,7 +7,7 @@ public class RegisterForPushNotifications extends MastodonAPIRequest<PushSubscri
 	public RegisterForPushNotifications(String deviceToken, String encryptionKey, String authKey, PushSubscription.Alerts alerts, PushSubscription.Policy policy, String accountID){
 		super(HttpMethod.POST, "/push/subscription", PushSubscription.class);
 		Request r=new Request();
-		r.subscription.endpoint="https://app.joinmastodon.org/relay-to/fcm/"+deviceToken+"/"+accountID;
+		r.subscription.endpoint="https://push.ff15.eu/relay-to/fcm/"+deviceToken+"/"+accountID;
 		r.data.alerts=alerts;
 		r.policy=policy;
 		r.subscription.keys.p256dh=encryptionKey;
